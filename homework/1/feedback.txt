@@ -10,3 +10,7 @@ Global Stream Page:
 Profile Page:
 1. Add features: “add friend/ delete friend”, “Chat”, for other users (not the user himself). 
 2. There should be a place for profile background picture.
+
+
+
+Feedback provided by my friend Songze Chen.
