@@ -1,0 +1,12 @@
+Login Page:
+1.The function of the upper-left button (three horizontal lines) is not specified？The search button on the upper-right is not neccessary？
+
+Global Stream Page:
+1. The hint in the search field "Search post" should be changed to "Search…"
+2. add “New Post” feature
+3. The "Archive" button in the post block should be -> like, comment, share, favorite, and more.
+
+
+Profile Page:
+1. Add features: “add friend/ delete friend”, “Chat”, for other users (not the user himself). 
+2. There should be a place for profile background picture.
