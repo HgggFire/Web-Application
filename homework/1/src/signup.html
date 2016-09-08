@@ -40,36 +40,40 @@
 		</nav>
 		
 		<div class="container">
-			<div class="form-signin">
-				<div class="row">
-					<div class="col-xs-6 col-lg-4">
-						<label for="inputFirstName" class="sr-only">FirstName</label>
-						<input id="inputFirstName" class="form-control" placeholder="First Name" required  autofocus>
+			<div class="row">
+				<div class="col-sm-6 form-signin">
+					<div class="row">
+						<div class="col-xs-6 col-lg-4">
+							<label for="inputFirstName" class="sr-only">FirstName</label>
+							<input id="inputFirstName" class="form-control" placeholder="First Name" required  autofocus>
+						</div>
+						<div class="col-xs-6 col-lg-4">
+							<label for="inputLastName" class="sr-only">LastName</label>
+							<input id="inputLastName" class="form-control" placeholder="Last Name" required>
+						</div>
 					</div>
-					<div class="col-xs-6 col-lg-4">
-						<label for="inputLastName" class="sr-only">LastName</label>
-						<input id="inputLastName" class="form-control" placeholder="Last Name" required>
+					<input id="inputUsername" class="form-control" placeholder="Username" required>
+					<input id="inputPassword" class="form-control" placeholder="Password" required>
+					<input id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+					
+		        	<div class="row">
+		        		<div class="col-xs-8 col-lg-4">
+		        			<a href="./mainpage.html"><button class="btn btn-lg btn-success btn-block" type="submit">Sign Up</button></a>
+		        		</div>
+		        		<div class="col-xs-4 col-lg-4">
+							<p id="oldusr">Old user?</p>
+							<a href="./login.html"><p>Sign in</p></a>
+						</div>
 					</div>
-				</div>
-				<input id="inputUsername" class="form-control" placeholder="Username" required>
-				<input id="inputPassword" class="form-control" placeholder="Password" required>
-				<input id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+				</div><!-- form -->
 				
-	        	<div class="row">
-	        		<div class="col-xs-6 col-lg-4">
-	        			<div class="checkbox">
-					       	<label>
-					          	<input type="checkbox" value="remember-me"> Remember me
-					        </label>
-			        	</div>
-						<p><a href="#">Forgot Password?</a></p>
-						
+				<div id="welcomeCol" class="col-sm-4 container">
+					<div>
+						<img id="welcomeImg" src="images/welcome_logo.png" height="300px" width="520px" >
 					</div>
-	        		<div class="col-xs-6 col-lg-4">
-	        			<a href="./mainpage.html"><button class="btn btn-lg btn-success btn-block" type="submit">Sign Up</button></a>
-	        		</div>
-				</div>
-			</div>
+				</div><!-- picture -->
+				
+			</div><!-- row -->
 		</div> <!-- container -->
 				
 		<!-- Bootstrap core JavaScript

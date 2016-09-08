@@ -3,6 +3,20 @@ body {
   padding-bottom: 40px;
   background-color: #eee;
 }
+
+.navbar {
+  background-color: #0085ff;
+  border-color: #0000ff;
+}
+
+.navbar .navbar-brand {
+  color: #333300;
+}
+
+.btn-block {
+  background-color: #0085ff;
+}
+
 .starter-template {
   padding: 40px 15px;
   text-align: center;
@@ -55,7 +69,7 @@ body {
 }
 
 #welcomeCol {
-  margin-top: 90px;
+  margin-top: 130px;
   margin-left: 40px;
 }
 
