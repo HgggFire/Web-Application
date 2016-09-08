@@ -7,7 +7,7 @@
 	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	    <meta name="description" content="15637 HW1">
 	    <meta name="author" content="Zhiqiao Lin">
-	    <link rel="icon" href="../../favicon.ico">
+	    <link rel="icon" href="./images/favicon.ico">
 	    
 	    <title>15637 Homework 1</title>
 	    
@@ -18,7 +18,7 @@
 	    <link href="../../../bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 	    
 	    <!-- Custom styles for this template -->
-    	<link href="./css/template.css" rel="stylesheet">
+    	<link href="./css/login.css" rel="stylesheet">
     	
     	<script src="../../../bootstrap/docs/assets/js/ie-emulation-modes-warning.js"></script>
     	
@@ -34,24 +34,63 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">Grumblr</a>
+					<a class="navbar-brand" href="./login.html">Grumblr</a>
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
-		          	<ul class="nav navbar-nav">
-			            <li class="active"><a href="#">Home</a></li>
-			            <li><a href="#about">About</a></li>
-			            <li><a href="#contact">Contact</a></li>
-		          	</ul>
+					<form class="navbar-form navbar-right">
+						<a href="./signup.html" class="btn btn-success">Sign Up</a>
+					</form>
 			    </div><!--/.nav-collapse -->
 			</div>
 		</nav>
 		
 		<div class="container">
-			<div class="starter-template">
-				<h1>Bootstrap starter template</h1>
-        		<p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-      		</div>
-		</div><!-- /.container -->
+			<div class="row">
+	
+				<div class="col-sm-6 form-signin">
+					<div class="row">
+						<div class="col-xs-2 col-lg-4">
+		      				<img src="images/user.png" width="35" height="35">
+						</div>
+						<div class="col-xs-10 col-lg-4">
+		      				<label for="inputUsername" class="sr-only">Username</label>
+							<input type="email" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2 col-lg-4">
+		      				<img src="./images/password.png" width="35" height="35">
+						</div>
+						<div class="col-xs-10 col-lg-4">
+							<label for="inputPassword" class="sr-only">Password</label>
+							<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+						</div>
+					</div>
+					
+		        	<div class="row">
+		        		<div class="col-xs-6 col-lg-4">
+		        			<div class="checkbox">
+						       	<label>
+						          	<input type="checkbox" value="remember-me"> Remember me
+						        </label>
+				        	</div>
+							<p><a href="#">Forgot Password?</a></p>
+							
+						</div>
+		        		<div class="col-xs-6 col-lg-4">
+		        			<a href="./mainpage.html"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></a>
+		        		</div>
+					</div>
+				</div><!-- form -->
+				
+				<div id="welcomeCol" class="col-sm-6 container">
+					<div>
+						<img id="welcomeImg" src="images/scottylogo.png" >
+					</div>
+					<h1>Welcome to Grumblr</h1>
+				</div><!-- picture -->
+			</div><!-- row -->
+		</div> <!-- container -->
 				
 		<!-- Bootstrap core JavaScript
 	    ================================================== -->
