@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+</head>
+
+<body>
+    {% if firstname %}
+    <h1>Hellow, {{firstname}}!</h1>
+    {% endif %}
+
+    <p>Create a student</p>
+    <form action="hello" method="get">
+        <div>
+        Andrew ID:<input type="text" name="andrewid">
+        </div>
+        <div>
+        First Name:<input type="text" name="firstname">
+        </div>
+        <div>
+        Last Name:<input type="text" name="lastname">
+        </div>
+        <input type="submit">
+        {% csrf_token %}
+    </form>
+
+    <hr>
+
+    <p>Create a course</p>
+    <form action="hello" method="get">
+        <div>
+        Course #:<input type="text" name="coursenum">
+        </div>
+        <div>
+        Course Name:<input type="text" name="coursename">
+        </div>
+        <div>
+        Instructor:<input type="text" name="isntructor">
+        </div>
+        <input type="submit">
+        {% csrf_token %}
+    </form>
+
+    <hr>
+
+    <p>Register a student for a course</p>
+    <form action="hello" method="get">
+        <div>
+        Andrew ID:<input type="text" name="andrewid_reg">
+        </div>
+        <div>
+        Course #:<input type="text" name="coursenum_reg">
+        </div>
+        <input type="submit">
+        {% csrf_token %}
+    </form>
+
+    <hr>
+
+    <p>Current course rosters:</p>
+</body>
+
+</html>
+
