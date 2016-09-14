@@ -1,0 +1,49 @@
+body {
+    padding-top: 50px;
+    padding-bottom: 40px;
+    background-color: #111;
+}
+
+button {
+    border: none;
+    color: white;
+    padding: 25px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 75px;
+    height: 65px;
+}
+
+input {
+    color: black;
+    padding: 25px 32px;
+    text-align: right;
+    text-color: black;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 250px;
+}
+
+form {
+    display: block;
+    width: 380px ;
+    margin: 0 auto;
+}
+
+.num_btn {
+    background-color: #aaa;
+}
+
+.opr_btn {
+    background-color: #666;
+}
+
+button:hover {
+    background-color: white; /* Green */
+    color: black;
+}

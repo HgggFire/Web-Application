@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <meta name="description" content="15637 HW2">
+    <meta name="author" content="Zhiqiao Lin">
+
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'calculator/calculator.css' %}">
+</head>
+
+<body>
+    {% if newnum %}
+    {% endif %}
+
+    <form action="calc" method="post">
+        <input type="text" name="num" value={{newnum}} readonly> <br>
+        <button type="submit" name="no7" formaction="calc">7</button>
+        <button type="submit" name="no8" formaction="calc">8</button>
+        <button type="submit" name="no9" formaction="calc">9</button>
+        <button type="submit" name="add" formaction="calc">+</button>
+        <br>
+        <button type="submit" name="no4" formaction="calc">4</button>
+        <button type="submit" name="no5" formaction="calc">5</button>
+        <button type="submit" name="no6" formaction="calc">6</button>
+        <button type="submit" name="sub" formaction="calc">-</button>
+        <br>
+        <button type="submit" name="no1" formaction="calc">1</button>
+        <button type="submit" name="no2" formaction="calc">2</button>
+        <button type="submit" name="no3" formaction="calc">3</button>
+        <button type="submit" name="mul" formaction="calc">x</button>
+        <br>
+        <button type="submit" name="no0" formaction="calc">0</button>
+        <button type="submit" name="eql" formaction="calc">=</button>
+        <button type="submit" name="div" formaction="calc">/</button>
+        {% csrf_token %}
+    </form>
+</body>
+
+</html>

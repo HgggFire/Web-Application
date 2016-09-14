@@ -19,9 +19,8 @@ from django.contrib import admin
 import calculator.views
 
 urlpatterns = [
+    url(r'^', calculator.views.calc),
+    url(r'^index/', calculator.views.calc),
     url(r'^admin/', admin.site.urls),
-    url(r'^calculator/add', calculator.views.add),
-    url(r'^calculator/minus', calculator.views.minus),
-    url(r'^calculator/multiply', calculator.views.multiply),
-    url(r'^calculator/divide', calculator.views.divide),
+    url(r'^calculator/calc', calculator.views.calc),
 ]
