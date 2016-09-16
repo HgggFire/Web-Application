@@ -33,22 +33,11 @@ def calc(request):
     if 'prev' in request.POST:
         context['prev'] = request.POST['prev']
 
-
     if 'prev_op' in request.POST:
         context['prev_op'] = request.POST['prev_op']
 
-
-    # print('prev_num:'+context['prev'])
-
     if 'opr' in request.POST:
-        # print(request.POST['opr'])
-        # print('prevnum:'+context['prev'])
-        # print('prevop:'+context['prev_op'])
-        # print('num:'+ str(request.POST['num']))
-
         # hopefully this 0 is never the case (result will be overwritten by following steps)
-        # result = 0
-
         # first operation, return result as the currently displaying number: num
         if 'last_btn' in request.POST:
             last_btn = request.POST['last_btn']
@@ -73,30 +62,23 @@ def calc(request):
             return render(request, 'calc.html', context)
 
         if context['prev_op'] == '' or (not 'prev' in request.POST):
-            # print('op empty')
             result = int(request.POST['num'])
         # not the first operation. return prev + num
         elif context['prev_op'] == '+':
-            # print('op+')
             result = int(context['prev']) + int(request.POST['num'])
         elif context['prev_op'] == '-':
-            # print('op-')
             result = int(context['prev']) - int(request.POST['num'])
         elif context['prev_op'] == 'x':
-            # print('opx')
             result = int(context['prev']) * int(request.POST['num'])
         elif context['prev_op'] == '/':
-            # print('op/')
             if int(request.POST['num']) == 0:
                 result = 'ERROR:Invalid_Operation'
             else:
                 result = int(context['prev']) / int(request.POST['num'])
         elif context['prev_op'] == '=':
-            # print('op=')
             result = int(request.POST['num'])
             # if 'last_btn' in request.POST and request.POST['last_btn'] != '' and re
         else:
-            # print('result:' + str(result))
             result = int(request.POST['num'])
 
         if result == 'ERROR:Invalid_Operation':
