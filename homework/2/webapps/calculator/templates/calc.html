@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+<head>
+    <title>Calculator</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'calculator/calculator.css' %}">
+</head>
+
+<body>
+    <form action="calc" method="post">
+        {% if result %}
+        <input type="text" name="result" value={{result}} readonly>
+        <input type="hidden" name="num" value={{newnum}}>
+        {% else %}
+        <input type="text" name="num" value={{newnum}} readonly>
+        {% endif %}
+        <input type="hidden" name="prev" value={{prev}}>
+        <input type="hidden" name="prev_op" value={{prev_op}}>
+        <input type="hidden" name="last_btn" value={{last_btn}}>
+        <table>
+            <tr>
+                <td><button class="num_btn" type="submit" name="dig" value="7" formaction="calc">7</button></td>
+                <td><button class="num_btn" type="submit" name="dig" value="8" formaction="calc">8</button></td>
+                <td><button class="num_btn" type="submit" name="dig" value="9" formaction="calc">9</button></td>
+                <td><button class="opr_btn" type="submit" name="opr" value="+" formaction="calc">&plus;</button></td>
+            </tr>
+            <tr>
+                <td><button class="num_btn" type="submit" name="dig" value="4" formaction="calc">4</button></td>
+                <td><button class="num_btn" type="submit" name="dig" value="5" formaction="calc">5</button></td>
+                <td><button class="num_btn" type="submit" name="dig" value="6" formaction="calc">6</button></td>
+                <td><button class="opr_btn" type="submit" name="opr" value="-" formaction="calc">&minus;</button></td>
+            </tr>
+            <tr>
+                <td><button class="num_btn" type="submit" name="dig" value="1" formaction="calc">1</button></td>
+                <td><button class="num_btn" type="submit" name="dig" value="2" formaction="calc">2</button></td>
+                <td><button class="num_btn" type="submit" name="dig" value="3" formaction="calc">3</button></td>
+                <td><button class="opr_btn" type="submit" name="opr" value="x" formaction="calc">&times;</button></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button class="num_btn" type="submit" name="dig" value="0" formaction="calc">0</button></td>
+                <td><button class="opr_btn" type="submit" name="opr" value="=" formaction="calc">&equals;</button></td>
+                <td><button class="opr_btn" type="submit" name="opr" value="/" formaction="calc">&divide;</button></td>
+            </tr>
+        </table>
+        {% csrf_token %}
+    </form>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information Webapp</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+<p>Create a student:</p>
+<form action="/sio/create-student" method="post">
+    Andrew ID:  <input type="text" name="andrew-id"><br>
+    First name: <input type="text" name="first-name"><br>
+    Last name:  <input type="text" name="last-name"><br>
+                {% csrf_token %}
+                <input type="submit" value="Submit">
+</form>
+
+<hr>
+<p>Create a course:</p>
+<form action="/sio/create-course" method="post">
+    Course #:    <input type="text" name="course-number"><br>
+    Course name: <input type="text" name="course-name"><br>
+    Instructor:  <input type="text" name="instructor"><br>
+                 {% csrf_token %}
+                 <input type="submit" value="Submit">
+</form>
+
+<hr>
+<p>Register a student for a course:</p>
+<form action="/sio/register" method="post">
+    Andrew ID: <input type="text" name="andrew-id"><br>
+    Course #:  <input type="text" name="course-number"><br>
+               {% csrf_token %}
+               <input type="submit" value="Submit">
+</form>
+
+<hr>
+<p>Current course rosters:
+</p>
+
+</body>
