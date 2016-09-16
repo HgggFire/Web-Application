@@ -4,6 +4,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render
 
+def notFound(request):
+    return render(request, 'not_found.html')
+
 def calc(request):
     context = {}
     context['newnum'] = 0
@@ -54,7 +57,10 @@ def calc(request):
                 context['prev'] = request.POST['prev']
                 context['last_btn'] = request.POST['opr']
                 context['result'] = request.POST['prev']
-                context['newnum'] = 0
+                if request.POST['opr'] == '=':
+                    context['newnum'] = request.POST['prev']
+                else:
+                    context['newnum'] = 0
                 print(request.POST['prev'])
                 return render(request, 'calc.html', context)
 
@@ -88,6 +94,7 @@ def calc(request):
         elif context['prev_op'] == '=':
             # print('op=')
             result = int(request.POST['num'])
+            # if 'last_btn' in request.POST and request.POST['last_btn'] != '' and re
         else:
             # print('result:' + str(result))
             result = int(request.POST['num'])
@@ -109,6 +116,5 @@ def calc(request):
             # However this 0 won't be dispalyed, and 'result' is displayed instead
             context['newnum'] = 0
         context['last_btn'] = request.POST['opr']
-
 
     return render(request, 'calc.html', context)

@@ -20,7 +20,7 @@ import calculator.views
 
 urlpatterns = [
     url(r'^', calculator.views.calc),
-    url(r'^index/', calculator.views.calc),
     url(r'^admin/', admin.site.urls),
-    url(r'^calculator/calc', calculator.views.calc),
+    url(r'^calculator/calc/', calculator.views.calc),
+    url(r'^calc/', calculator.views.calc),
 ]
