@@ -48,7 +48,7 @@
 		
 		<div class="container">
 			<div class="row">
-				<form method="post" action="{% url 'login' %}" class="col-sm-4 col-xs-4 col-lg-6 form-signin">
+				<form method="post" action="{% url 'login' %}" class="col-sm-4 col-xs-12 col-lg-6 form-signin">
 					{% if form.errors %}
 					<p style="color:red">
 					Incorrect user name and password.
@@ -92,7 +92,7 @@
 					{% csrf_token %}
 				</form><!-- form -->
 				
-				<div id="welcomeCol" class="col-sm-8 col-xs-8 col-lg-4 container">
+				<div id="welcomeCol" class="col-sm-6 col-xs-12 col-lg-4 container">
 					<div>
 						<img id="welcomeImg" src="{% static 'images/welcome_logo.png' %}" height="300px" width="520px" >
 					</div>
