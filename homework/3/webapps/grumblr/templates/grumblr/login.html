@@ -36,7 +36,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="./login.html">Grumblr</a>
+					<a class="navbar-brand" href="/grumblr/mainpage">Grumblr</a>
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<div class="navbar-form navbar-right">
@@ -48,7 +48,7 @@
 		
 		<div class="container">
 			<div class="row">
-				<form method="post" action="{% url 'login' %}" class="col-sm-6 form-signin">
+				<form method="post" action="{% url 'login' %}" class="col-sm-4 col-xs-4 col-lg-6 form-signin">
 					{% if form.errors %}
 					<p style="color:red">
 					Incorrect user name and password.
@@ -56,26 +56,26 @@
 					{% endif %}
 
 					<div class="row">
-						<div class="col-xs-2 col-lg-4">
+						<div class="col-xs-2 col-lg-2">
 		      				<img src="{% static 'images/user.png' %}" width="35" height="35">
 						</div>
-						<div class="col-xs-10 col-lg-4">
+						<div class="col-xs-10 col-lg-10">
 		      				<label for="inputUsername" class="sr-only">Username</label>
 							<input type="text" id="inputUsername" class="form-control" placeholder="Username" name="username" required autofocus>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xs-2 col-lg-4">
+						<div class="col-xs-2 col-lg-2">
 		      				<img src="{% static 'images/password.png' %}" width="35" height="35">
 						</div>
-						<div class="col-xs-10 col-lg-4">
+						<div class="col-xs-10 col-lg-10">
 							<label for="inputPassword" class="sr-only">Password</label>
 							<input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
 						</div>
 					</div>
 					
 		        	<div class="row">
-		        		<div class="col-xs-6 col-lg-4">
+		        		<div class="col-xs-12 col-lg-6">
 		        			<div class="checkbox">
 						       	<label>
 						          	<input type="checkbox" value="remember-me"> Remember me
@@ -83,7 +83,7 @@
 				        	</div>
 							<p><a href="#">Forgot Password?</a></p>
 						</div>
-		        		<div class="col-xs-6 col-lg-4">
+		        		<div class="col-xs-12 col-lg-6">
 		        			<input value="Sign in" class="btn btn-lg btn-primary btn-block" type="submit">
 		        		</div>
 					</div>
@@ -92,7 +92,7 @@
 					{% csrf_token %}
 				</form><!-- form -->
 				
-				<div id="welcomeCol" class="col-sm-4 container">
+				<div id="welcomeCol" class="col-sm-8 col-xs-8 col-lg-4 container">
 					<div>
 						<img id="welcomeImg" src="{% static 'images/welcome_logo.png' %}" height="300px" width="520px" >
 					</div>

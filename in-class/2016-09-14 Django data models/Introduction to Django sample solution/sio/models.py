@@ -4,23 +4,17 @@ from django.db import models
 
 # Create your models here.
 class Student(models.Model):
-    name = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
+    firstName = models.CharField(max_length=100)
     andrewId = models.CharField(max_length=100)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.andrewId
 
-    class Meta:
-        ordering = ('andrewId',)
-
-
 class Course(models.Model):
-    name = models.CharField(max_length=100)
-    id = models.IntegerField()
-    students = models.ManyToManyField(Student)
+    courseNumber = models.IntegerField(max_length=10)
+    courseName = models.CharField(max_length=300)
+    instructor = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ('id',)
+    def __unicode__(self):
+        return self.courseNumber

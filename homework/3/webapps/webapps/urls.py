@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^grumblr/login$', django.contrib.auth.views.login, {'template_name':'grumblr/login.html'}, name='login'),
     # Route to logout a user and send them back to the login page
     url(r'^grumblr/logout$', django.contrib.auth.views.logout_then_login, name='logout'),
+    url(r'^logout$', django.contrib.auth.views.logout_then_login, name='logout'),
     url(r'^grumblr/register$', grumblr.views.register, name='register'),
     url(r'^grumblr/mainpage$', grumblr.views.home, name='home'),
     url(r'^grumblr/delete/(?P<id>\d+)$', grumblr.views.delete, name='delete'),

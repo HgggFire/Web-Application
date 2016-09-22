@@ -14,10 +14,8 @@ from grumblr.models import *
 @login_required
 def home(request):
     # Sets up list of all the users' items
-    posts = Post.objects.all()
-    postsList = list(posts)
-    postsList.reverse()
-    return render(request, 'grumblr/mainpage.html', {'posts' : postsList, 'user' : request.user})
+    posts = Post.objects.all().order_by("-time")
+    return render(request, 'grumblr/mainpage.html', {'posts' : posts, 'user' : request.user})
 
 
 @login_required
@@ -31,12 +29,9 @@ def post(request):
         new_post = Post(post=request.POST['post'], user=request.user)
         new_post.save()
 
-    posts = Post.objects.all()
-    postsList = list(posts)
-    postsList.reverse()
-    name = request.user.first_name + " " + request.user.last_name
+    posts = Post.objects.all().order_by("-time")
 
-    context = {'posts' : postsList, 'errors' : errors, 'user' : request.user}
+    context = {'posts' : posts, 'errors' : errors, 'user' : request.user}
     return render(request, 'grumblr/mainpage.html', context)
 
 @login_required
@@ -50,10 +45,8 @@ def delete(request, id):
     except ObjectDoesNotExist:
         errors.append('The item did not exist in your todo list.')
 
-    posts = Post.objects.filter(user=request.user)
-    postList = list(posts)
-    postList.reverse()
-    context = {'posts' : postList, 'errors' : errors}
+    posts = Post.objects.filter(user=request.user).order_by('-time')
+    context = {'posts' : posts, 'errors' : errors}
     return render(request, 'grumblr/profile.html', context)
 
 
@@ -64,12 +57,9 @@ def profile(request, username):
     post_user = User.objects.get(username=username)
 
     # get the posts of the user specified
-    posts_of_user = Post.objects.filter(user=post_user)
+    posts_of_user = Post.objects.filter(user=post_user).order_by("-time")
 
-    postsList = list(posts_of_user)
-    postsList.reverse()
-
-    context = {'posts' : postsList, 'errors' : errors, 'user' : post_user}
+    context = {'posts' : posts_of_user, 'errors' : errors, 'user' : post_user}
     return render(request, 'grumblr/profile.html', context)
 
 

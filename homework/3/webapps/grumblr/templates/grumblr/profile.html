@@ -53,31 +53,32 @@
 			</div>
 		</nav>
 		
-		
+		<!--profile background picture in this container-->
 		<div class="container" id="upper">
-			<div class="row row-offcanvas row-offcanvas-right">
-				<div class="col-xs-6 col-sm-6 sidebar-offcanvas" id="profile">
-					<div class="row row-offcanvas row-offcanvas-right">
-						<div class="col-xs-8 col-sm-8">
-							<img src="{% static 'images/profile_picture.jpg' %}" id="profile_picture">
-						</div>
-						
-						<div class="col-xs-4 col-sm-4">
-							<h4 id="name"> {{ user.first_name }} {{ user.last_name }} </h4>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 		
 		
 		<div class="container">
 		    <div class="row">
-				<div class="col-xs-6 col-sm-6 sidebar-offcanvas" id="sidebar">
-		          	<div class="list-group">
+
+				<div class="col-xs-12 col-sm-6 sidebar-offcanvas" id="sidebar">
+					<div class="row">
+						<div class="col-xs-8 col-sm-8">
+							<img src="{% static 'images/profile_picture.jpg' %}" id="profile_picture">
+						</div>
+
+						<div class="col-xs-4 col-sm-4">
+							<h4 id="name"> {{ user.first_name }} {{ user.last_name }} </h4>
+						</div>
+					</div>
+					<br>
+
+		          	<div class="list-group" id="info_bar">
 		            	<a href="#" class="list-group-item active"><img id="friendsearch" src="{% static 'images/account.svg' %}" width="35" height="35">        Info</a>
 		            </div>
+
 		            <div id="info">
+						<h5>Name: {{user.first_name}} {{user.last_name}}</h5>
 		            	<h5>From: Pittsburgh</h5>
 		            	<h5>Education: Carnegie Mellon</h5>
 		            	<h5>Email: jacsonm@andrew.cmu.edu</h5>
@@ -86,7 +87,7 @@
 		            
 		      	</div><!--/.profile info-->
 
-				<div class="col-xs-6 col-sm-6 blog-main">
+				<div class="col-xs-12 col-sm-6 blog-main">
 					{% for post in posts %}
 					<form method="post" action="/grumblr/delete/{{post.id}}" >
 						<div class="blog-post">

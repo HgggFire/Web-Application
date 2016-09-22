@@ -35,7 +35,12 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="./login.html">Grumblr</a>
+					<a class="navbar-brand" href="/grumblr/mainpage">Grumblr</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<div class="navbar-form navbar-right">
+						<a href="mainpage" class="btn btn-success">Sign In</a>
+					</div>
 				</div>
 			</div>
 		</nav>
@@ -44,21 +49,21 @@
 			<div class="row">
 				<form method="post" class="col-sm-6 form-signin" action="{% url 'register' %}">
 					<div class="row">
-						<div class="col-xs-6 col-lg-4">
+						<div class="col-xs-6 col-lg-6">
 							<label for="inputFirstName" class="sr-only">FirstName</label>
-							<input id="inputFirstName" class="form-control" placeholder="First Name" name="firstname" autofocus>
+							<input id="inputFirstName" class="form-control" placeholder="First Name" name="firstname" required autofocus>
 						</div>
-						<div class="col-xs-6 col-lg-4">
+						<div class="col-xs-6 col-lg-6">
 							<label for="inputLastName" class="sr-only">LastName</label>
-							<input id="inputLastName" class="form-control" placeholder="Last Name" name="lastname" >
+							<input id="inputLastName" class="form-control" placeholder="Last Name" name="lastname" required >
 						</div>
 					</div>
-					<input id="inputUsername" class="form-control" placeholder="Username" name="username" >
-					<input id="inputPassword" type="password" class="form-control" placeholder="Password" name="password1" >
-					<input id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" name="password2" >
+					<input id="inputUsername" class="form-control" placeholder="Username" name="username" required>
+					<input id="inputPassword" type="password" class="form-control" placeholder="Password" name="password1" required >
+					<input id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" name="password2" required >
 					
 		        	<div class="row">
-		        		<div class="col-xs-8 col-lg-4">
+		        		<div class="col-xs-8 col-lg-8">
 		        			<input class="btn btn-lg btn-success btn-block" type="submit" value="Sign up">
 		        		</div>
 		        		<div class="col-xs-4 col-lg-4">

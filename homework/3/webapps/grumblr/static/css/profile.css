@@ -8,12 +8,12 @@ body {
 }*/
 
 .container {
-  padding-top: 20px;
+    padding-top: 20px;
 }
 
 .navbar {
-  background-color: #0085ff;
-  border-color: #0000ff;
+    background-color: #0085ff;
+    border-color: #0000ff;
 }
 
 .nav .navbar-nav .navbar-right li a {
@@ -21,7 +21,7 @@ body {
 }
 
 .navbar .navbar-brand {
-    color: #333300;
+    color: #ddd;
 }
 
 .list-group {
@@ -42,8 +42,8 @@ body {
 }
 
 #profile_picture, #info {
-    padding-left: 30px;
-    padding-top: 50px;
+    padding-left : 30px;
+    margin-bottom: auto;
     height="180px" width="300px"
 }
 
@@ -56,24 +56,25 @@ body {
         1px 1px 0 #000;
 
     position: absolute;
-    top: 150px;
+    top: 185px;
     right:15px;
 }
 
 #sidebar {
-  padding-right: 50px;
+    padding-right: 50px;
+    width: 450px;
 }
 
 #upper {
-  height: 350px;
-  background-image: url('../images/background.jpg'); 
-  background-repeat:no-repeat;
-  background-size:cover;
-  width: 80%;
+    height: 350px;
+    background-image: url('../images/background.jpg');
+    background-repeat:no-repeat;
+    background-size:cover;
+    width: 80%;
 }
 
 #profile {
-  position: absolute;
-  bottom: 200px;
-  left: 80px;
+    position: absolute;
+    bottom: 200px;
+    left: 80px;
 }
