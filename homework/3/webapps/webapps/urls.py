@@ -24,8 +24,9 @@ import grumblr.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', grumblr.views.home),
+    url(r'^grumblr$', grumblr.views.home),
     url(r'^grumblr/post', grumblr.views.post, name='post'),
-    # url(r'^grumblr/delete-item/(?P<id>\d+)$', grumblr.views.delete_item),
+    url(r'^grumblr/profile/(?P<id>\d+)$', grumblr.views.profile),
     # Route for built-in authentication with our own custom login page
     url(r'^grumblr/login$', django.contrib.auth.views.login, {'template_name':'grumblr/login.html'}, name='login'),
     # Route to logout a user and send them back to the login page

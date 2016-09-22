@@ -46,9 +46,8 @@
 			            <input type="text" class="form-control" placeholder="Search...">
 			   			<img src="{% static 'images/search_white.png' %}" width="25" height="25">
 			   			<img src="{% static 'images/account.png' %}" width="25" height="25">
-			   			<a id="username" href="profile">Michael Jackson</a></li>
+			   			<a id="username" href="profile">{{ user_name }}</a>
 						<a href="logout" class="btn btn-info">Sign out</a>
-						{% csrf_token %}
 			        </form>
 			    </div><!--/.nav-collapse -->
 			</div>
@@ -63,24 +62,24 @@
 					<form method="post" action="{% url 'post' %}">
 						<div class="row row-offcanvas">
 							<div class="col-xs-11 col-sm-11 blog-main">
-								<input type="text" class="form-control" placeholder="Say something...">
+								<input type="text" class="form-control" placeholder="Say something..." name="post">
 							</div>
 							<div class="col-xs-1 col-sm-1 blog-main">
-								<a class="btn btn-primary">Post</a>
+								<input type="submit" class="btn btn-primary" value="Post">
 							</div>
 						</div>
-
+						{% csrf_token %}
 					</form>
+
+					{% for post in posts %}
 					<div class="blog-post">
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-						<p><a class="btn btn-default" href="#" role="button">Like</a></p>
+						<a href="/grumblr/profile/{{post.id}}">{{ user_name }}</a>
+						<p>{{ post }}</p>
+						<a class="btn btn-default" href="#" role="button">Like</a>
 					</div>
 					<hr>
-					<div class="blog-post">
-						<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-						<p><a class="btn btn-default" href="#" role="button">Like</a></p>
-					</div>
-					<hr>
+					{% endfor %}
+
 					<div class="blog-post">
 						<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
 						<p><a class="btn btn-default" href="#" role="button">Like</a></p>

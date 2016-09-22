@@ -23,31 +23,33 @@ def post(request):
     errors = []
 
     # Creates a new item if it is present as a parameter in the request
-    if not 'item' in request.POST or not request.POST['item']:
+    if not 'post' in request.POST or not request.POST['post']:
         errors.append('You must enter an item to add.')
     else:
         new_post = Post(post=request.POST['post'], user=request.user)
         new_post.save()
 
-    posts = Post.objects.filter(user=request.user)
-    context = {'posts' : posts, 'errors' : errors}
+    posts = Post.objects.all()
+    postsList = list(posts)
+    postsList.reverse()
+    name = request.user.first_name + " " + request.user.last_name
+
+    context = {'posts' : postsList, 'errors' : errors, 'user_name' : name}
     return render(request, 'grumblr/mainpage.html', context)
 
 
-# @login_required
-# def delete_item(request, id):
-#     errors = []
-#
-#     # Deletes item if the logged-in user has an item matching the id
-#     try:
-#         item_to_delete = Item.objects.get(id=id, user=request.user)
-#         item_to_delete.delete()
-#     except ObjectDoesNotExist:
-#         errors.append('The item did not exist in your todo list.')
-#
-#     items = Item.objects.filter(user=request.user)
-#     context = {'items' : items, 'errors' : errors}
-#     return render(request, 'private-todo-list/index.html', context)
+@login_required
+def profile(request, id):
+    errors = []
+
+    post_clicked = Post.objects.get(id=id)
+    post_user = post_clicked.user
+
+    # get the posts of the user specified
+    posts_of_user = Post.objects.filter(user=post_user)
+
+    context = {'posts' : posts_of_user, 'errors' : errors}
+    return render(request, 'grumblr/profile.html', context)
 
 
 def register(request):
