@@ -13,9 +13,11 @@ from grumblr.models import *
 
 @login_required
 def home(request):
-    # Sets up list of just the logged-in user's (request.user's) items
-    posts = Post.objects.filter(user=request.user)
-    return render(request, 'grumblr/mainpage.html', {'posts' : posts})
+    # Sets up list of all the users' items
+    posts = Post.objects.all()
+    postsList = list(posts)
+    postsList.reverse()
+    return render(request, 'grumblr/mainpage.html', {'posts' : postsList, 'user' : request.user})
 
 
 @login_required
@@ -34,21 +36,40 @@ def post(request):
     postsList.reverse()
     name = request.user.first_name + " " + request.user.last_name
 
-    context = {'posts' : postsList, 'errors' : errors, 'user_name' : name}
+    context = {'posts' : postsList, 'errors' : errors, 'user' : request.user}
     return render(request, 'grumblr/mainpage.html', context)
+
+@login_required
+def delete(request, id):
+    errors = []
+
+    # Deletes item if the logged-in user has an item matching the id
+    try:
+        item_to_delete = Post.objects.get(id=id, user=request.user)
+        item_to_delete.delete()
+    except ObjectDoesNotExist:
+        errors.append('The item did not exist in your todo list.')
+
+    posts = Post.objects.filter(user=request.user)
+    postList = list(posts)
+    postList.reverse()
+    context = {'posts' : postList, 'errors' : errors}
+    return render(request, 'grumblr/profile.html', context)
 
 
 @login_required
-def profile(request, id):
+def profile(request, username):
     errors = []
 
-    post_clicked = Post.objects.get(id=id)
-    post_user = post_clicked.user
+    post_user = User.objects.get(username=username)
 
     # get the posts of the user specified
     posts_of_user = Post.objects.filter(user=post_user)
 
-    context = {'posts' : posts_of_user, 'errors' : errors}
+    postsList = list(posts_of_user)
+    postsList.reverse()
+
+    context = {'posts' : postsList, 'errors' : errors, 'user' : post_user}
     return render(request, 'grumblr/profile.html', context)
 
 

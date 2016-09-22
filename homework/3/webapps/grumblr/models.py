@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Post(models.Model):
     post = models.CharField(max_length=42)
     user = models.ForeignKey(User)
-    date = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(auto_now_add=True)
 
 
     def __unicode__(self):
