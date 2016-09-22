@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -9,18 +10,18 @@
 	    <meta name="author" content="Zhiqiao Lin">
 	    <link rel="icon" href="./images/favicon.ico">
 	    
-	    <title>15637 Homework 1</title>
+	    <title>sign up</title>
 	    
 	    <!-- Bootstrap core CSS -->
-	    <link href="../../../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	    <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
 	    
 	    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	    <link href="../../../bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	    <link href="{% static 'bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
 	    
 	    <!-- Custom styles for this template -->
-    	<link href="./css/signup.css" rel="stylesheet">
+    	<link href="{% static 'css/signup.css' %}" rel="stylesheet">
     	
-    	<script src="../../../bootstrap/docs/assets/js/ie-emulation-modes-warning.js"></script>
+    	<script src="{% static 'bootstrap/docs/assets/js/ie-emulation-modes-warning.js' %}"></script>
     	
 	</head>
 	
@@ -41,48 +42,58 @@
 		
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-6 form-signin">
+				<form method="post" class="col-sm-6 form-signin" action="{% url 'register' %}">
 					<div class="row">
 						<div class="col-xs-6 col-lg-4">
 							<label for="inputFirstName" class="sr-only">FirstName</label>
-							<input id="inputFirstName" class="form-control" placeholder="First Name" required  autofocus>
+							<input id="inputFirstName" class="form-control" placeholder="First Name" name="firstname" autofocus>
 						</div>
 						<div class="col-xs-6 col-lg-4">
 							<label for="inputLastName" class="sr-only">LastName</label>
-							<input id="inputLastName" class="form-control" placeholder="Last Name" required>
+							<input id="inputLastName" class="form-control" placeholder="Last Name" name="lastname" >
 						</div>
 					</div>
-					<input id="inputUsername" class="form-control" placeholder="Username" required>
-					<input id="inputPassword" class="form-control" placeholder="Password" required>
-					<input id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+					<input id="inputUsername" class="form-control" placeholder="Username" name="username" >
+					<input id="inputPassword" type="password" class="form-control" placeholder="Password" name="password1" >
+					<input id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" name="password2" >
 					
 		        	<div class="row">
 		        		<div class="col-xs-8 col-lg-4">
-		        			<a href="./mainpage.html" class="btn btn-lg btn-success btn-block" type="submit">Sign Up</a>
+		        			<input class="btn btn-lg btn-success btn-block" type="submit" value="Sign up">
 		        		</div>
-		        		<div class="col-xs-4 col-lg-4">s
+		        		<div class="col-xs-4 col-lg-4">
 							<p id="oldusr">Old user?</p>
-							<a href="./login.html"><p>Sign in</p></a>
+							<a href="/"><p>Sign in</p></a>
 						</div>
 					</div>
-				</div><!-- form -->
+					<!--error messages-->
+					{% for error in errors %}
+					<p style="color: red">
+					{{ error }}
+					</p>
+					{% endfor %}
+
+					{% csrf_token %}
+				</form><!-- form -->
 				
 				<div id="welcomeCol" class="col-sm-4 container">
 					<div>
-						<img id="welcomeImg" src="images/welcome_logo.png" height="300px" width="520px" >
+						<img id="welcomeImg" src="{% static 'images/welcome_logo.png' %}" height="300px" width="520px" >
 					</div>
 				</div><!-- picture -->
 				
 			</div><!-- row -->
 		</div> <!-- container -->
+
+
 				
 		<!-- Bootstrap core JavaScript
 	    ================================================== -->
 	    <!-- Placed at the end of the document so the pages load faster -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-	    <script src="../../../bootstrap/dist/js/bootstrap.min.js"></script>
+	    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 	    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	    <script src="../../../bootstrap/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
+	    <script src="{% static 'bootstrap/docs/assets/js/ie10-viewport-bug-workaround.js' %}"></script>
 	</body>
 </html>

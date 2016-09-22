@@ -57,7 +57,7 @@ ROOT_URLCONF = 'webapps.urls'
 LOGIN_URL = '/grumblr/login'
 
 # Default URL to redirect to after a user logs in.
-LOGIN_REDIRECT_URL = '/grumblr/homepage'
+LOGIN_REDIRECT_URL = '/grumblr/login'
 
 
 TEMPLATES = [

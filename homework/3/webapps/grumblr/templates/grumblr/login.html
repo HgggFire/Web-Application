@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -12,15 +13,16 @@
 	    <title>15637 Homework 1</title>
 	    
 	    <!-- Bootstrap core CSS -->
-	    <link href="../../../bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-	    
+	    <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
 	    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	    <link href="../../../bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	    <link href="{% static 'bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css' % }" rel="stylesheet">
 	    
 	    <!-- Custom styles for this template -->
-    	<link href="./css/login.css" rel="stylesheet">
+    	<!--<link href="./css/login.css" rel="stylesheet">-->
+		<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
     	
-    	<script src="../../../bootstrap/docs/assets/js/ie-emulation-modes-warning.js"></script>
+    	<script src="{% static 'bootstrap/docs/assets/js/ie-emulation-modes-warning.js' % }"></script>
     	
 	</head>
 	
@@ -37,32 +39,38 @@
 					<a class="navbar-brand" href="./login.html">Grumblr</a>
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
-					<form class="navbar-form navbar-right">
-						<a href="./signup.html" class="btn btn-success">Sign Up</a>
-					</form>
+					<div class="navbar-form navbar-right">
+						<a href="register" class="btn btn-success">Sign Up</a>
+					</div>
 			    </div><!--/.nav-collapse -->
 			</div>
 		</nav>
 		
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-6 form-signin">
+				<form method="post" action="{% url 'login' %}" class="col-sm-6 form-signin">
+					{% if form.errors %}
+					<p style="color:red">
+					Incorrect user name and password.
+					</p>
+					{% endif %}
+
 					<div class="row">
 						<div class="col-xs-2 col-lg-4">
-		      				<img src="images/user.png" width="35" height="35">
+		      				<img src="{% static 'images/user.png' %}" width="35" height="35">
 						</div>
 						<div class="col-xs-10 col-lg-4">
 		      				<label for="inputUsername" class="sr-only">Username</label>
-							<input type="email" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+							<input type="text" id="inputUsername" class="form-control" placeholder="Username" name="username" required autofocus>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-xs-2 col-lg-4">
-		      				<img src="./images/password.png" width="35" height="35">
+		      				<img src="{% static 'images/password.png' %}" width="35" height="35">
 						</div>
 						<div class="col-xs-10 col-lg-4">
 							<label for="inputPassword" class="sr-only">Password</label>
-							<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+							<input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
 						</div>
 					</div>
 					
@@ -74,17 +82,19 @@
 						        </label>
 				        	</div>
 							<p><a href="#">Forgot Password?</a></p>
-							
 						</div>
 		        		<div class="col-xs-6 col-lg-4">
-		        			<a href="mainpage.html" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</a>
+		        			<input value="Sign in" class="btn btn-lg btn-primary btn-block" type="submit">
 		        		</div>
 					</div>
-				</div><!-- form -->
+
+					<input type="hidden" name="next" value="mainpage" />
+					{% csrf_token %}
+				</form><!-- form -->
 				
 				<div id="welcomeCol" class="col-sm-4 container">
 					<div>
-						<img id="welcomeImg" src="images/welcome_logo.png" height="300px" width="520px" >
+						<img id="welcomeImg" src="{% static 'images/welcome_logo.png' %}" height="300px" width="520px" >
 					</div>
 				</div><!-- picture -->
 				
@@ -96,8 +106,8 @@
 	    <!-- Placed at the end of the document so the pages load faster -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-	    <script src="../../../bootstrap/dist/js/bootstrap.min.js"></script>
+	    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
 	    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	    <script src="../../../bootstrap/docs/assets/js/ie10-viewport-bug-workaround.js"></script>
+	    <script src="{% static 'bootstrap/docs/assets/js/ie10-viewport-bug-workaround.js' %}"></script>
 	</body>
 </html>
