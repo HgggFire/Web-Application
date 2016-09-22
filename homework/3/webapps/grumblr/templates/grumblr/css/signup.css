@@ -1,0 +1,76 @@
+body {
+  padding-top: 150px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.navbar {
+  background-color: #0085ff;
+  border-color: #0000ff;
+}
+
+.navbar .navbar-brand {
+  color: #333300;
+}
+
+.btn-block {
+  background-color: #0085ff;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    margin-top: 0px;
+    margin-bottom: 8px;
+    font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input {
+  margin-bottom: 8px;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.col-sm-6 {
+  margin-top: 40px;
+  margin-left: 100px;
+}
+
+#welcomeImg {
+  margin-left: 30px;
+}
+
+#welcomeCol {
+  margin-top: 50px;
+  margin-left: 40px;
+}
+
+#oldusr {
+    margin-bottom: 2px;
+}
