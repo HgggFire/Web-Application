@@ -8,3 +8,5 @@ urlpatterns = [
     # Parses number from URL and uses it as the item_id argument to the action
     url(r'^delete-item/(?P<item_id>\d+)$', shared_todo_list.views.delete_item)
 ]
+
+
