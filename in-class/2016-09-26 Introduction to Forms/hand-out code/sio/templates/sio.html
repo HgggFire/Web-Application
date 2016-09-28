@@ -6,38 +6,109 @@
 </head>
 
 <body>
-{% if messages %}
-  {% for m in messages %}
-<p style="color:red;">{{m}}</p>
-  {% endfor %}
-{% endif %}
+
+<!--print the form validation errors-->
+{% for error in forms.studentForm.non_field_errors %}
+<p style="color: red">
+{{ error }}
+</p>
+{% endfor %}
+
+{% for error in forms.courseForm.non_field_errors %}
+<p style="color: red">
+{{ error }}
+</p>
+{% endfor %}
+
+{% for error in forms.registrationForm.non_field_errors %}
+<p style="color: red">
+{{ error }}
+</p>
+{% endfor %}
+
+
 <p>Create a student:</p>
-<form action="/sio/create-student" method="post">
-    Andrew ID:  <input type="text" name="andrew_id"><br>
-    First name: <input type="text" name="first_name"><br>
-    Last name:  <input type="text" name="last_name"><br>
-                {% csrf_token %}
-                <input type="submit" value="Submit">
+<form method="post" action="{% url 'create_student' %}">
+<table>
+{% for field in forms.studentForm.visible_fields %}
+<tr>
+  <td>{{field.label_tag}}</td>
+  <td>{{field}}</td>
+  <td style="color: red">{{field.errors}}</td>
+</tr>
+{% endfor %}
+</table>
+{% for field in forms.studentForm.hidden_fields %}
+{{field}}
+{% endfor %}
+{% csrf_token %}
+<input type="submit" value="Register" />
 </form>
 
-<hr>
 <p>Create a course:</p>
-<form action="/sio/create-course" method="post">
-    Course #:    <input type="text" name="course_number"><br>
-    Course name: <input type="text" name="course_name"><br>
-    Instructor:  <input type="text" name="instructor"><br>
-                 {% csrf_token %}
-                 <input type="submit" value="Submit">
+<form method="post" action="{% url 'create_course' %}">
+<table>
+{% for field in forms.courseForm.visible_fields %}
+<tr>
+  <td>{{field.label_tag}}</td>
+  <td>{{field}}</td>
+  <td style="color: red">{{field.errors}}</td>
+</tr>
+{% endfor %}
+</table>
+{% for field in forms.courseForm.hidden_fields %}
+{{field}}
+{% endfor %}
+{% csrf_token %}
+<input type="submit" value="Register" />
 </form>
 
-<hr>
 <p>Register a student for a course:</p>
-<form action="/sio/register-student" method="post">
-    Andrew ID: <input type="text" name="andrew_id"><br>
-    Course #:  <input type="text" name="course_number"><br>
-               {% csrf_token %}
-               <input type="submit" value="Submit">
+<form method="post" action="{% url 'register_student' %}">
+<table>
+{% for field in forms.registrationForm.visible_fields %}
+<tr>
+  <td>{{field.label_tag}}</td>
+  <td>{{field}}</td>
+  <td style="color: red">{{field.errors}}</td>
+</tr>
+{% endfor %}
+</table>
+{% for field in forms.registrationForm.hidden_fields %}
+{{field}}
+{% endfor %}
+{% csrf_token %}
+<input type="submit" value="Register" />
 </form>
+
+
+<!--<p>Create a student:</p>-->
+<!--<form action="/sio/create-student" method="post">-->
+    <!--Andrew ID:  <input type="text" name="andrew_id"><br>-->
+    <!--First name: <input type="text" name="first_name"><br>-->
+    <!--Last name:  <input type="text" name="last_name"><br>-->
+                <!--{% csrf_token %}-->
+                <!--<input type="submit" value="Submit">-->
+<!--</form>-->
+
+<!--<hr>-->
+<!--<p>Create a course:</p>-->
+<!--<form action="/sio/create-course" method="post">-->
+    <!--Course #:    <input type="text" name="course_number"><br>-->
+    <!--Course name: <input type="text" name="course_name"><br>-->
+    <!--Instructor:  <input type="text" name="instructor"><br>-->
+                 <!--{% csrf_token %}-->
+                 <!--<input type="submit" value="Submit">-->
+<!--</form>-->
+
+<!--<hr>-->
+<!--<p>Register a student for a course:</p>-->
+<!--<form action="/sio/register-student" method="post">-->
+    <!--Andrew ID: <input type="text" name="andrew_id"><br>-->
+    <!--Course #:  <input type="text" name="course_number"><br>-->
+               <!--{% csrf_token %}-->
+               <!--<input type="submit" value="Submit">-->
+<!--</form>-->
 
 <hr>
 <p>Current course rosters:

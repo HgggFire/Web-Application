@@ -2,86 +2,110 @@ from django.shortcuts import render
 from django.db import transaction
 
 from sio.models import *
+from sio.forms import *
 
 def home(request):
-    context = {'courses':Course.objects.all(), 'messages':[]}
+    context = {'courses':Course.objects.all()}
+
+    forms = {'studentForm':CreateStudentForm(),
+             'courseForm':CreateCourseForm(),
+             'registrationForm':RegistrationForm()}
+    context['forms'] = forms
+
     return render(request, 'sio.html', context)
 
 @transaction.atomic
 def create_student(request):
-    messages = []
-    context = {'courses':Course.objects.all(), 'messages':messages}
-    
-    if not 'andrew_id' in request.POST or not request.POST['andrew_id']:
-        messages.append("Andrew ID is required.")
-    elif Student.objects.filter(andrew_id=request.POST['andrew_id']).count() > 0:
-        messages.append("A student with Andrew ID %s already exists." % 
-                      request.POST['andrew_id'])
-    if not 'first_name' in request.POST or not request.POST['first_name']:
-        messages.append("First name is required.")
-    if not 'last_name' in request.POST or not request.POST['last_name']:
-        messages.append("Last name is required.")
+    context = {'courses':Course.objects.all()}
 
-    if messages:
+    # Just display the registration form if this is a GET request.
+    if request.method == 'GET':
+        forms = {'studentForm':CreateStudentForm(),
+                 'courseForm':CreateCourseForm(),
+                 'registrationForm':RegistrationForm()}
+        context['forms'] = forms
+
         return render(request, 'sio.html', context)
 
-    new_student = Student(andrew_id=request.POST['andrew_id'],
-                          first_name=request.POST['first_name'],
-                          last_name=request.POST['last_name'])
+    # Creates a bound form from the request POST parameters and makes the
+    # form available in the request context dictionary.
+    form = CreateStudentForm(request.POST)
+    forms = {'studentForm':form,
+             'courseForm':CreateCourseForm(),
+             'registrationForm':RegistrationForm()}
+    context['forms'] = forms
+
+    # Validates the form.
+    if not form.is_valid():
+        return render(request, 'sio.html', context)
+
+    new_student = Student(andrew_id=form.cleaned_data['andrew_id'],
+                          first_name=form.cleaned_data['first_name'],
+                          last_name=form.cleaned_data['last_name'])
     new_student.save()
 
-    messages.append('Added %s' % new_student)
     return render(request, 'sio.html', context)
 
 @transaction.atomic
 def create_course(request):
-    messages = []
-    context = {'courses':Course.objects.all(), 'messages':messages}
+    context = {'courses':Course.objects.all()}
 
-    if not 'course_number' in request.POST or not request.POST['course_number']:
-        messages.append("Course number is required.")
-    elif Course.objects.filter(course_number=request.POST['course_number']).count() > 0:
-        messages.append("Course %s already exists." % 
-                      request.POST['course_number'])
-    if not 'course_name' in request.POST or not request.POST['course_name']:
-        messages.append("Course name is required.")
-    if not 'instructor' in request.POST or not request.POST['instructor']:
-        messages.append("Instructor is required.")
+    # Just display the registration form if this is a GET request.
+    if request.method == 'GET':
+        forms = {'studentForm':CreateStudentForm(),
+                 'courseForm':CreateCourseForm(),
+                 'registrationForm':RegistrationForm()}
+        context['forms'] = forms
 
-    if messages:
         return render(request, 'sio.html', context)
 
-    new_course = Course(course_number=request.POST['course_number'],
-                        course_name=request.POST['course_name'],
-                        instructor=request.POST['instructor'])
+    # Creates a bound form from the request POST parameters and makes the
+    # form available in the request context dictionary.
+    form = CreateCourseForm(request.POST)
+    forms = {'studentForm':CreateStudentForm(),
+             'courseForm':form,
+             'registrationForm':RegistrationForm()}
+    context['forms'] = forms
+
+    # Validates the form.
+    if not form.is_valid():
+        return render(request, 'sio.html', context)
+
+    new_course = Course(course_number=form.cleaned_data['course_num'],
+                        course_name=form.cleaned_data['course_name'],
+                        instructor=form.cleaned_data['instructor'])
     new_course.save()
 
-    messages.append('Added %s' % new_course)
     return render(request, 'sio.html', context)
 
 @transaction.atomic
 def register_student(request):
-    messages = []
-    context = {'courses':Course.objects.all(), 'messages':messages}
+    context = {'courses':Course.objects.all()}
 
-    if not 'andrew_id' in request.POST or not request.POST['andrew_id']:
-        messages.append("Andrew ID is required.")
-    elif Student.objects.filter(andrew_id=request.POST['andrew_id']).count() != 1:
-        messages.append("Could not find Andrew ID %s." %
-                        request.POST['andrew_id'])
-    if not 'course_number' in request.POST or not request.POST['course_number']:
-        messages.append("Course number is required.")
-    elif Course.objects.filter(course_number=request.POST['course_number']).count() != 1:
-        messages.append("Could not find course %s." %
-                        request.POST['course_number'])
+    # Just display the registration form if this is a GET request.
+    if request.method == 'GET':
+        forms = {'studentForm':CreateStudentForm(),
+                 'courseForm':CreateCourseForm(),
+                 'registrationForm':RegistrationForm()}
+        context['forms'] = forms
 
-    if messages:
         return render(request, 'sio.html', context)
 
-    course = Course.objects.get(course_number=request.POST['course_number'])
-    student = Student.objects.get(andrew_id=request.POST['andrew_id'])
+    # Creates a bound form from the request POST parameters and makes the
+    # form available in the request context dictionary.
+    form = RegistrationForm(request.POST)
+    forms = {'studentForm':CreateStudentForm(),
+             'courseForm':CreateCourseForm(),
+             'registrationForm':form}
+    context['forms'] = forms
+
+    # Validates the form.
+    if not form.is_valid():
+        return render(request, 'sio.html', context)
+
+    course = Course.objects.get(course_number=form.cleaned_data['course_num'])
+    student = Student.objects.get(andrew_id=form.cleaned_data['andrew_id'])
     course.students.add(student)
     course.save()
 
-    messages.append('Added %s to %s' % (student, course))
     return render(request, 'sio.html', context)

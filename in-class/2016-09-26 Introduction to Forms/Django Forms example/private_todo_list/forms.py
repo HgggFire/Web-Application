@@ -7,8 +7,8 @@ class RegistrationForm(forms.Form):
     password1 = forms.CharField(max_length = 200, 
                                 label='Password', 
                                 widget = forms.PasswordInput())
-    password2 = forms.CharField(max_length = 200, 
-                                label='Confirm password',  
+    password2 = forms.CharField(max_length = 200,
+                                label='Confirm password',
                                 widget = forms.PasswordInput())
 
 
