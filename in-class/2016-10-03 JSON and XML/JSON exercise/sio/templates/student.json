@@ -1,0 +1,4 @@
+{
+  "person" : { "firstName" : "{{person.first_name}}", 
+               "lastName" : "{{person.last_name}}"     }
+}
