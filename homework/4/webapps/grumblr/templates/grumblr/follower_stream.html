@@ -1,10 +1,10 @@
 {% extends "grumblr/base.html" %}
 {% load static %}
-{% block title %}Grumblr Global Stream{% endblock %}
+{% block title %}Grumblr Follower Stream{% endblock %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/mainpage.css' %}">
 {% endblock %}
-{% block description %}<meta name="description" content="Main page">{% endblock %}
+{% block description %}<meta name="description" content="Follower Stream page">{% endblock %}
 {% block content %}
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
@@ -30,38 +30,21 @@
 	</div>
 </nav>
 
+
 <div class="container">
 	<div class="row row-offcanvas row-offcanvas-right">
 		<div class="col-xs-12 col-sm-8 blog-main">
-			<span><a class="btn btn-primary" href="{% url 'follower_stream' request.user.username %}" role="button">Go To Follower Stream</a></span>
-			<form method="post" action="{% url 'post' %}">
-				<div class="row row-offcanvas" id="post_row">
-					<div class="col-xs-10 col-sm-10 blog-main">
-						<input type="text" class="form-control" placeholder="Say something..." name="post" maxlength="42">
-					</div>
-					<div class="col-xs-1 col-sm-1 blog-main">
-						<input type="submit" class="btn btn-primary" value="Post">
-					</div>
-				</div>
-				{% csrf_token %}
-			</form>
-
+            <h1>Follower Stream</h1>
 			{% for post in posts %}
 			<div class="blog-post">
-				<span><a href="{% url 'profile' post.user.username %}">{{ post.user.first_name }} {{ post.user.last_name }}</a></span>
+				<span><a href="/grumblr/profile/{{post.user.username}}">{{ post.user.first_name }} {{ post.user.last_name }}</a></span>
 				<span class="time">{{post.time}}</span>
-				{% if post.user == request.user %}
-				{% elif not post.user in followees %}
-				<span><a class="btn btn-info" href="{% url 'follow' post.user.username %}" role="button">Follow</a></span>
-				{% else %}
-				<span><a class="btn btn-warning" href="{% url 'unfollow' post.user.username %}" role="button">Unfollow</a></span>
-				{% endif %}
 				<p>{{ post }}</p>
-
+				<a class="btn btn-warning" href="{% url 'unfollow' post.user.username %}" role="button">Unfollow</a>
 			</div>
 			<hr>
 			{% endfor %}
-	  </div><!--/.col-xs-12.col-sm-9-->
+	  </div>
 
 	  <div class="col-xs-6 col-sm-4 sidebar-offcanvas" id="sidebar">
 		  <div class="list-group">
@@ -79,7 +62,5 @@
 		  </div>
 	  </div><!--/.sidebar-offcanvas-->
   </div><!--/row-->
-
-
 </div><!--/.container-->
 {% endblock %}

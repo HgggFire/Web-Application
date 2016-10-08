@@ -126,7 +126,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
 STATIC_URL = '/static/'
+
+# Media files
 MEDIA_ROOT = BASE_DIR + '/media/'
 MEDIA_URL = '/media/'
+
+# Configure Django to merely print emails rather than sending them
+# Comment out this line to enable real image-sending
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

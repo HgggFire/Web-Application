@@ -14,12 +14,14 @@ class Post(models.Model):
         return self.post
 
 class Profile(models.Model):
-    # first_name = models.CharField(max_length=100)
-    # last_name = models.CharField(max_length=100)
     age = models.PositiveSmallIntegerField()
     bio = models.CharField(max_length=420, default="Write your short bio here.", blank=True)
-    user = models.ForeignKey(User, primary_key=True)
+    user = models.OneToOneField(User, primary_key=True)
     picture = models.ImageField(upload_to="profile_pictures", blank=True)
+    followees = models.ManyToManyField(
+        User,
+        related_name='User+',
+    )
 
     @staticmethod
     def get_profile(user):

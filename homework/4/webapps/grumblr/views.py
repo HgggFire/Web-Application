@@ -20,7 +20,11 @@ from mimetypes import  guess_type
 def home(request):
     # Sets up list of all the users' items
     posts = Post.objects.all().order_by("-time")
-    return render(request, 'grumblr/mainpage.html', {'posts' : posts, 'user' : request.user})
+
+    profile = Profile.objects.get(user=request.user)
+    followees = profile.followees.all()
+
+    return render(request, 'grumblr/mainpage.html', {'posts' : posts, 'user' : request.user, 'followees' : followees})
 
 
 @login_required
@@ -70,10 +74,67 @@ def profile(request, username):
     except ObjectDoesNotExist:
         errors.append('The profile did not exist.')
 
-    print(profile.picture.name + "\n")
-
     context = {'posts' : posts_of_user, 'errors' : errors, 'user' : post_user, 'profile' : profile}
     return render(request, 'grumblr/profile.html', context)
+
+@login_required
+def follow(request, username):
+    errors = []
+
+    post_user = User.objects.get(username=username)
+
+    # get the profile of the user specified
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        errors.append('The profile did not exist.')
+
+    profile.followees.add(post_user);
+    profile.save()
+
+    followees = profile.followees.all()
+
+    posts = Post.objects.filter(user__in=followees).order_by("-time")
+
+    return render(request, 'grumblr/follower_stream.html', {'posts' : posts, 'user' : request.user, 'followees' : followees})
+
+@login_required
+def follower_stream(request, username):
+    errors = []
+
+    # get the profile of the user specified
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        errors.append('The profile did not exist.')
+
+    followees = profile.followees.all()
+
+    posts = Post.objects.filter(user__in=followees).order_by("-time")
+
+    return render(request, 'grumblr/follower_stream.html', {'posts' : posts, 'user' : request.user, 'followees' : followees})
+
+@login_required
+def unfollow(request, username):
+    errors = []
+
+    post_user = User.objects.get(username=username)
+
+    # get the profile of the user specified
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        errors.append('The profile did not exist.')
+
+    profile.followees.remove(post_user);
+    profile.save()
+
+    followees = profile.followees.all()
+
+    posts = Post.objects.filter(user__in=followees).order_by("-time")
+
+    return render(request, 'grumblr/follower_stream.html', {'posts' : posts, 'user' : request.user, 'followees' : followees})
+
 
 @login_required
 def edit_profile(request):

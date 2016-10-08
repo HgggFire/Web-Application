@@ -26,8 +26,11 @@ urlpatterns = [
     url(r'^$', grumblr.views.home),
     url(r'^grumblr/*$', grumblr.views.home),
     url(r'^grumblr/post', grumblr.views.post, name='post'),
-    url(r'^grumblr/profile/(?P<username>\w+)$', grumblr.views.profile),
+    url(r'^grumblr/profile/(?P<username>\w+)$', grumblr.views.profile, name='profile'),
     url(r'^grumblr/photo/(?P<username>\w+)$', grumblr.views.get_photo, name='photo'),
+    url(r'^grumblr/follow/(?P<username>\w+)$', grumblr.views.follow, name='follow'),
+    url(r'^grumblr/follower_stream/(?P<username>\w+)$', grumblr.views.follower_stream, name='follower_stream'),
+    url(r'^grumblr/unfollow/(?P<username>\w+)$', grumblr.views.unfollow, name='unfollow'),
     url(r'^grumblr/go_edit$', grumblr.views.go_edit, name='go_edit'),
     url(r'^grumblr/edit_profile/', grumblr.views.edit_profile, name='edit_profile'),
     # Route for built-in authentication with our own custom login page
