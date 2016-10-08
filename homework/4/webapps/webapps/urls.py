@@ -27,6 +27,9 @@ urlpatterns = [
     url(r'^grumblr/*$', grumblr.views.home),
     url(r'^grumblr/post', grumblr.views.post, name='post'),
     url(r'^grumblr/profile/(?P<username>\w+)$', grumblr.views.profile),
+    url(r'^grumblr/photo/(?P<username>\w+)$', grumblr.views.get_photo, name='photo'),
+    url(r'^grumblr/go_edit$', grumblr.views.go_edit, name='go_edit'),
+    url(r'^grumblr/edit_profile/', grumblr.views.edit_profile, name='edit_profile'),
     # Route for built-in authentication with our own custom login page
     url(r'^grumblr/login$', django.contrib.auth.views.login, {'template_name':'grumblr/login.html'}, name='login'),
     # Route to logout a user and send them back to the login page
@@ -34,6 +37,5 @@ urlpatterns = [
     url(r'^logout$', django.contrib.auth.views.logout_then_login, name='logout'),
     url(r'^grumblr/register$', grumblr.views.register, name='register'),
     url(r'^grumblr/mainpage$', grumblr.views.home, name='home'),
-    url(r'^grumblr/edit_profile$', grumblr.views.edit_profile, name='edit_profile'),
     url(r'^grumblr/delete/(?P<id>\d+)$', grumblr.views.delete, name='delete'),
 ]

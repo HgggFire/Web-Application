@@ -44,7 +44,8 @@ body {
 #profile_picture, #info {
     padding-left : 30px;
     margin-bottom: auto;
-    height="180px" width="300px"
+    height : 220px;
+    width : 385px;
 }
 
 #name {
