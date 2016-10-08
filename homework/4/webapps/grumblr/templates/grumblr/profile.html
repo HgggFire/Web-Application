@@ -1,0 +1,95 @@
+{% extends "grumblr/base.html" %}
+{% load static %}
+{% block title %}Grumblr Profile{% endblock %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+{% endblock %}
+{% block description %}<meta name="description" content="Profile">{% endblock %}
+{% block content %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target = "#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/grumblr/mainpage">Grumblr</a>
+		</div>
+
+		<div id="navbar" class="collapse navbar-collapse">
+			<!-- <ul class="nav navbar-nav navbar-right">
+				<li><a href="#contact">Michael Jackson</a></li>
+			</ul> -->
+			<form class="navbar-form navbar-right">
+				<input type="text" class="form-control" placeholder="Search...">
+				<img src="{% static 'images/search_white.png' %}" width="25" height="25">
+				<img src="{% static 'images/account.png' %}" width="25" height="25">
+				<a id="username" href="/grumblr/profile/{{ request.user.username }}">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+			</form>
+
+		</div><!--/.nav-collapse -->
+	</div>
+</nav>
+
+<!--profile background picture in this container-->
+<div class="container" id="upper">
+</div>
+
+
+<div class="container">
+	<div class="row">
+
+		<div class="col-xs-12 col-sm-6 sidebar-offcanvas" id="sidebar">
+			<div class="row">
+				<div class="col-xs-8 col-sm-8">
+					<img src="{% static 'images/profile_picture.jpg' %}" id="profile_picture">
+				</div>
+
+				<div class="col-xs-4 col-sm-4">
+					<h4 id="name"> {{ user.first_name }} {{ user.last_name }} </h4>
+				</div>
+			</div>
+			<br>
+
+			<div class="list-group" id="info_bar">
+				<div class="list-group-item active"><img id="friendsearch" src="{% static 'images/account.svg' %}" width="35" height="35">Info{% if request.user.username == user.username %}<div class="btn btn-default" href="/grumblr/edit_profile" role="button">Edit Profile</div>{% endif %}</div>
+			</div>
+
+			<div id="info">
+				<h5>First Name: {{user.first_name}}</h5>
+				<h5>Last Name: {{user.last_name}}</h5>
+				<h5>Age: {{profile.age}}</h5>
+				<h5>From: Pittsburgh</h5>
+				<h5>Education: Carnegie Mellon</h5>
+				<h5>Email: jacsonm@andrew.cmu.edu</h5>
+				<h5>Tel: (412)542-9583</h5>
+				<h4>Bio:</h4>
+				<p> {{profile.bio}} </p>
+			</div>
+
+		</div><!--/.profile info-->
+
+		<div class="col-xs-12 col-sm-6 blog-main">
+			{% for post in posts %}
+			<form method="post" action="/grumblr/delete/{{post.id}}" >
+				<div class="blog-post">
+					<span><a href="/grumblr/profile/{{post.user.username}}">{{ post.user.first_name }} {{ post.user.last_name }}</a></span>
+					<span class="time">{{post.time}}</span>
+					<p>{{ post }}</p>
+					<span class="btn btn-default" href="#" role="button">Like</span>
+					{% if request.user.username == user.username %}
+					<span> <input type="submit" class="btn btn-danger delete-btn" value="Delete"></span>
+					{% endif %}
+				</div>
+				<hr>
+				{% csrf_token %}
+			</form>
+			{% endfor %}
+		</div>
+
+	</div><!--/row-->
+</div><!--/.container-->
+
+{% endblock %}
