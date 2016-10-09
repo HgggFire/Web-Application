@@ -18,4 +18,4 @@ The TAs will read this file before evaluating your work.
 
 6.A default profile picture will be displayed if a user haven't uploaded one.
 
- 
+7.To Edit Profile, you need to go to your profile page first. There is a button "Edit Profile" below the big profile picture. 

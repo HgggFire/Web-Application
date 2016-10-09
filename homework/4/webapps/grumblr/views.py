@@ -166,6 +166,11 @@ def change_password(request):
     # get the posts of the user specified
     posts = Post.objects.filter(user=request.user).order_by("-time")
 
+
+    user = authenticate(username=user.username, \
+                            password=user.password)
+    login(request, user)
+
     context = {'posts' : posts, 'errors' : errors, 'user' : request.user, 'profile' : profile}
     return render(request, 'grumblr/profile.html', context)
 
