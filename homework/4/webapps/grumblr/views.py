@@ -66,7 +66,6 @@ def delete(request, id):
 
 @login_required
 def profile(request, username):
-    errors = []
 
     post_user = User.objects.get(username=username)
 
@@ -74,12 +73,11 @@ def profile(request, username):
     posts_of_user = Post.objects.filter(user=post_user).order_by("-time")
 
     # get the profile of the user specified
-    try:
-        profile = Profile.objects.get(user=post_user)
-    except ObjectDoesNotExist:
-        errors.append('The profile did not exist.')
+    post_user_profile = Profile.objects.get(user=post_user)
 
-    context = {'posts' : posts_of_user, 'errors' : errors, 'user' : post_user, 'profile' : profile}
+    followees = request.user.profile.followees.all()
+
+    context = {'posts' : posts_of_user, 'user' : post_user, 'profile' : post_user_profile, 'followees' : followees}
     return render(request, 'grumblr/profile.html', context)
 
 @login_required

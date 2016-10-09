@@ -24,6 +24,7 @@
 				<img src="{% static 'images/search_white.png' %}" width="25" height="25">
 				<img src="{% static 'images/account.png' %}" width="25" height="25">
 				<a id="username" href="/grumblr/profile/{{ request.user.username }}">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+				<a href="/grumblr/logout" class="btn btn-info">Sign out</a>
 			</form>
 
 		</div><!--/.nav-collapse -->
@@ -56,12 +57,12 @@
 
 			<div class="list-group" id="info_bar">
 				<div class="list-group-item active"><img id="friendsearch" src="{% static 'images/account.svg' %}" width="35" height="35">Info
-					{% if request.user.username == user.username %}
+					{% if user == request.user %}
 					<a class="btn btn-default" href="{% url 'go_edit' %}">Edit Profile</a>
-					{% elif not followed %}
-					<div class="btn btn-info" href="{% url 'follow' post.user.username %}">Follow</div>
+					{% elif user in followees %}
+					<a class="btn btn-warning" href="{% url 'unfollow' user.username %}">Unfollow</a>
 					{% else %}
-				<a class="btn btn-warning" href="/grumblr/unfollow/{{post.user.username}}" role="button">Unfollow</a>
+					<a class="btn btn-info" href="{% url 'follow' user.username %}">Follow</a>
 					{% endif %}
 				</div>
 			</div>
@@ -81,7 +82,15 @@
 			<form method="post" action="{% url 'delete' post.id %}" >
 				<div class="blog-post">
 					<span><a href="{% url 'profile' post.user.username %}">{{ post.user.first_name }} {{ post.user.last_name }}</a></span>
+					<span>
+						{% if profile.picture.name %}
+						<img src="{% url 'photo' user.username %}" id="small_profile_picture">
+						{% else %}
+						<img src="{% static 'images/profile_picture.jpg' %}" id="small_profile_picture">
+						{% endif %}
+					</span>
 					<span class="time">{{post.time}}</span>
+
 					<p>{{ post }}</p>
 					<span class="btn btn-default" href="#" role="button">Like</span>
 					{% if request.user.username == user.username %}

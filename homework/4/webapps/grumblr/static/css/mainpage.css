@@ -52,3 +52,8 @@ body {
 #post_row {
     padding: 15px;
 }
+
+#small_profile_picture {
+    height : 45px;
+    width : 45px;
+}

@@ -48,6 +48,11 @@ body {
     width : 385px;
 }
 
+#small_profile_picture {
+    height : 45px;
+    width : 45px;
+}
+
 #name {
     color: white;
     text-shadow:

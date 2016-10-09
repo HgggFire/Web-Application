@@ -49,6 +49,13 @@
 			{% for post in posts %}
 			<div class="blog-post">
 				<span><a href="{% url 'profile' post.user.username %}">{{ post.user.first_name }} {{ post.user.last_name }}</a></span>
+				<span>
+					{% if post.user.profile.picture.name %}
+					<img src="{% url 'photo' post.user.username %}" id="small_profile_picture">
+					{% else %}
+					<img src="{% static 'images/profile_picture.jpg' %}" id="small_profile_picture">
+					{% endif %}
+				</span>
 				<span class="time">{{post.time}}</span>
 				{% if post.user == request.user %}
 				{% elif not post.user in followees %}
