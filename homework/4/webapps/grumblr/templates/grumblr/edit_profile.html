@@ -39,7 +39,7 @@
 		</p>
 		{% endfor %}
 
-		<form enctype="multipart/form-data" method="post" class="col-sm-6 form-signin" action="/grumblr/edit_profile/{{request.user.username}}">
+		<form enctype="multipart/form-data" method="post" class="col-sm-6 form-signin" action="{% url 'edit_profile' %}">
 			<div class="row">
 				<div class="col-xs-12 col-lg-12">
 					<label for="inputFirstName">FirstName</label>
@@ -76,18 +76,17 @@
 					<input class="btn btn-lg btn-success btn-block" type="submit" value="Submit">
 				</div>
 			</div>
-
 			{% csrf_token %}
 		</form><!-- form -->
 
-        <form method="post" class="col-sm-6 form-signin" action="/grumblr/edit_profile/{{request.user.username}}">
+        <form method="post" class="col-sm-6 form-signin" action="{% url 'change_password' %}">
             <input id="inputPassword" type="password" class="form-control" placeholder="New Password" name="password" required >
             <input id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required >
              <div class="col-xs-12 col-lg-12">
                 <input class="btn btn-lg btn-success btn-block" type="submit" value="Change Password">
             </div>
+			{% csrf_token %}
         </form>
-
 
 
 	</div><!-- row -->
