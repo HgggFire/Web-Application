@@ -47,8 +47,18 @@
       <file leaf-file-name="mainpage.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webapps/grumblr/templates/grumblr/mainpage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.2125">
-              <caret line="53" column="54" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="54" />
+            <state vertical-scroll-proportion="-2.9375">
+              <caret line="51" column="22" selection-start-line="51" selection-start-column="22" selection-end-line="56" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="follower_stream.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/webapps/grumblr/templates/grumblr/follower_stream.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.3097826">
+              <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -74,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mainpage.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mainpage.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webapps/grumblr/static/css/mainpage.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.94380164">
-              <caret line="58" column="1" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="58" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -122,7 +132,6 @@
       <list>
         <option value="$PROJECT_DIR$/webapps/grumblr/templates/base.html" />
         <option value="$PROJECT_DIR$/webapps/grumblr/templates/grumblr/base.html" />
-        <option value="$PROJECT_DIR$/webapps/grumblr/templates/grumblr/follower_stream.html" />
         <option value="$PROJECT_DIR$/webapps/grumblr/models.py" />
         <option value="$PROJECT_DIR$/webapps/grumblr/static/css/signup.css" />
         <option value="$PROJECT_DIR$/webapps/grumblr/templates/grumblr/signup.html" />
@@ -140,6 +149,7 @@
         <option value="$PROJECT_DIR$/webapps/grumblr/static/css/profile.css" />
         <option value="$PROJECT_DIR$/webapps/grumblr/templates/grumblr/mainpage.html" />
         <option value="$PROJECT_DIR$/webapps/grumblr/static/css/mainpage.css" />
+        <option value="$PROJECT_DIR$/webapps/grumblr/templates/grumblr/follower_stream.html" />
       </list>
     </option>
   </component>
@@ -504,14 +514,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webapps/grumblr/templates/grumblr/follower_stream.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="7" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webapps/grumblr/static/css/signup.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5785124">
@@ -642,10 +644,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webapps/grumblr/templates/grumblr/mainpage.html">
+    <entry file="file://$PROJECT_DIR$/webapps/grumblr/static/css/mainpage.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.2125">
-          <caret line="53" column="54" selection-start-line="53" selection-start-column="54" selection-end-line="53" selection-end-column="54" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="58" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -658,10 +660,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webapps/grumblr/static/css/mainpage.css">
+    <entry file="file://$PROJECT_DIR$/webapps/grumblr/templates/grumblr/mainpage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.94380164">
-          <caret line="58" column="1" selection-start-line="58" selection-start-column="1" selection-end-line="58" selection-end-column="1" />
+        <state vertical-scroll-proportion="-2.9375">
+          <caret line="51" column="22" selection-start-line="51" selection-start-column="22" selection-end-line="56" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webapps/grumblr/templates/grumblr/follower_stream.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3097826">
+          <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
           <folding />
         </state>
       </provider>
