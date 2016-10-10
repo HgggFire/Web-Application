@@ -25,8 +25,10 @@ from django.db import transaction
 def home(request):
     # Sets up list of all the users' items
     posts = Post.objects.all().order_by("-time")
-
-    profile = Profile.objects.get(user=request.user)
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        raise Http404
     followees = profile.followees.all()
 
     return render(request, 'grumblr/mainpage.html', {'posts' : posts, 'user' : request.user, 'followees' : followees})
@@ -57,7 +59,7 @@ def delete(request, id):
         item_to_delete = Post.objects.get(id=id, user=request.user)
         item_to_delete.delete()
     except ObjectDoesNotExist:
-        errors.append('The item did not exist in your todo list.')
+        raise Http404
 
     posts = Post.objects.filter(user=request.user).order_by('-time')
     context = {'posts' : posts, 'errors' : errors}
@@ -66,14 +68,19 @@ def delete(request, id):
 
 @login_required
 def profile(request, username):
-
-    post_user = User.objects.get(username=username)
+    try:
+        post_user = User.objects.get(username=username)
+    except ObjectDoesNotExist:
+        raise Http404
 
     # get the posts of the user specified
     posts_of_user = Post.objects.filter(user=post_user).order_by("-time")
 
     # get the profile of the user specified
-    post_user_profile = Profile.objects.get(user=post_user)
+    try:
+        post_user_profile = Profile.objects.get(user=post_user)
+    except ObjectDoesNotExist:
+        raise Http404
 
     followees = request.user.profile.followees.all()
 
@@ -82,15 +89,16 @@ def profile(request, username):
 
 @login_required
 def follow(request, username):
-    errors = []
-
-    post_user = User.objects.get(username=username)
+    try:
+        post_user = User.objects.get(username=username)
+    except ObjectDoesNotExist:
+        raise Http404
 
     # get the profile of the user specified
     try:
         profile = Profile.objects.get(user=request.user)
     except ObjectDoesNotExist:
-        errors.append('The profile did not exist.')
+        raise Http404
 
     profile.followees.add(post_user);
     profile.save()
@@ -103,13 +111,11 @@ def follow(request, username):
 
 @login_required
 def follower_stream(request, username):
-    errors = []
-
     # get the profile of the user specified
     try:
         profile = Profile.objects.get(user=request.user)
     except ObjectDoesNotExist:
-        errors.append('The profile did not exist.')
+        raise Http404
 
     followees = profile.followees.all()
 
@@ -119,15 +125,16 @@ def follower_stream(request, username):
 
 @login_required
 def unfollow(request, username):
-    errors = []
-
-    post_user = User.objects.get(username=username)
+    try:
+        post_user = User.objects.get(username=username)
+    except ObjectDoesNotExist:
+        raise Http404
 
     # get the profile of the user specified
     try:
         profile = Profile.objects.get(user=request.user)
     except ObjectDoesNotExist:
-        errors.append('The profile did not exist.')
+        raise Http404
 
     profile.followees.remove(post_user);
     profile.save()
@@ -142,7 +149,10 @@ def unfollow(request, username):
 def change_password(request):
     errors = []
     context = {}
-    profile = Profile.objects.get(user=request.user)
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        raise Http404
     if request.method == 'GET':
         context['form'] = ChangePasswordForm()
         context['profile'] = profile
@@ -185,7 +195,7 @@ def edit_profile(request):
     try:
         profile = Profile.objects.get(user=request.user)
     except ObjectDoesNotExist:
-        errors.append('The profile did not exist.')
+        raise Http404
 
     # Just display the form if this is a GET request
     if request.method == 'GET':
@@ -200,7 +210,6 @@ def edit_profile(request):
 
     # Validates the form.
     if not form.is_valid():
-        print("not valid\n")
         context['profile'] = profile
         return render(request, 'grumblr/edit_profile.html', context)
 
@@ -211,7 +220,7 @@ def edit_profile(request):
     try:
         profile = Profile.objects.get(user=request.user)
     except ObjectDoesNotExist:
-        errors.append('The profile did not exist.')
+        raise Http404
 
     # Make changes to the profile
     profile.age=form.cleaned_data['age']
@@ -220,7 +229,6 @@ def edit_profile(request):
         profile.picture=form.cleaned_data['picture']
     user = request.user
     user.first_name = form.cleaned_data['first_name']
-    print(form.cleaned_data['first_name'])
     user.last_name = form.cleaned_data['last_name']
     profile.save()
     request.user.save()
@@ -231,10 +239,15 @@ def edit_profile(request):
 
 @login_required
 def get_photo(request, username):
-    print("getting photo\n")
     # get the profile of the user specified
-    user = User.objects.get(username=username)
-    profile = Profile.objects.get(user=user)
+    try:
+        user = User.objects.get(username=username)
+    except ObjectDoesNotExist:
+        raise Http404
+    try:
+        profile = Profile.objects.get(user=user)
+    except ObjectDoesNotExist:
+        raise Http404
 
     if not profile.picture:
         raise Http404
@@ -251,7 +264,7 @@ def go_edit(request):
     try:
         profile = Profile.objects.get(user=request.user)
     except ObjectDoesNotExist:
-        errors.append('The profile did not exist.')
+        raise Http404
 
     context = {'errors' : errors, 'profile' : profile}
     return render(request, 'grumblr/edit_profile.html', context)
@@ -320,8 +333,10 @@ def reset_password(request):
     # Validates the form.
     if not form.is_valid():
         return render(request, 'grumblr/reset_password.html', context)
-
-    user= User.objects.get(email=form.cleaned_data['email'])
+    try:
+        user= User.objects.get(email=form.cleaned_data['email'])
+    except ObjectDoesNotExist:
+        raise Http404
 
     token = default_token_generator.make_token(user)
 
@@ -343,7 +358,10 @@ def reset_password(request):
 @transaction.atomic
 def password_reset_confirmation(request, username, token):
     context = {}
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username=username)
+    except ObjectDoesNotExist:
+        raise Http404
 
     if not default_token_generator.check_token(user, token):
         raise Http404
@@ -360,19 +378,19 @@ def password_reset_form(request, username):
     if request.method == 'GET':
         context['form'] = ChangePasswordForm()
         return render(request, 'grumblr/reset_password_form.html', context)
-    print("\n1\n")
 
     # Creates a bound form from the request POST parameters and makes the
     # form available in the request context dictionary.
     form = ChangePasswordForm(request.POST)
     context['form'] = form
-    print("\n2\n")
     # Validates the form.
     if not form.is_valid():
         return render(request, 'grumblr/reset_password_form.html', context)
 
-    print("\n3\n")
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username=username)
+    except ObjectDoesNotExist:
+        raise Http404
     user.set_password(form.cleaned_data['password'])
     user.save()
 
@@ -381,7 +399,10 @@ def password_reset_form(request, username):
 
 @transaction.atomic
 def registration_confirmation(request, username, token):
-    user = User.objects.get(username=username)
+    try:
+        user = User.objects.get(username=username)
+    except ObjectDoesNotExist:
+        raise Http404
 
     if not default_token_generator.check_token(user, token):
         raise Http404
