@@ -18,7 +18,7 @@ class CreateStudentForm(forms.Form):
 
         # Confirms that the andrewId is not already present in the
         # Student model database.
-        andrewId = self.cleaned_data.get('andrew_id')
+        andrewId = self.cleaned_data.get('andrew_idd')
         if Student.objects.filter(andrew_id=andrewId):
             raise forms.ValidationError("AndrewID is already taken.")
 
