@@ -1,13 +1,5 @@
 var req;
-var count = 0;
 function getFortune() {
-    // count++;
-    // var p = document.getElementById("info");
-    // p.innerHTML = count;//req.readyState;
-    sendRequest();
-}
-// Sends a new request to update the to-do list
-function sendRequest() {
     if (window.XMLHttpRequest) {
         req = new XMLHttpRequest();
     } else {
