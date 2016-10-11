@@ -6,9 +6,7 @@ Commit graded: d0d4738f5ee1273becb9008e5dd3c55edcb7b05b
 
 ### Incremental development using Git (10/10)
 
-### Fulfilling the grumblr specification (17/20)
-
--3, Your CSS doesn't allow a user to login from the home page.
+### Fulfilling the grumblr specification (20/20)
 
 ### Proper input validation (16/20)
 
@@ -26,7 +24,7 @@ Commit graded: d0d4738f5ee1273becb9008e5dd3c55edcb7b05b
 
 ---
 
-#### Total score (90/100)
+#### Total score (93/100)
 
 ---
 
