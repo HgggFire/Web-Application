@@ -1,7 +1,6 @@
 from django import forms
-from string import lower
 
-from models import *
+from sio.models import *
 
 
 class CreateStudentForm(forms.ModelForm):

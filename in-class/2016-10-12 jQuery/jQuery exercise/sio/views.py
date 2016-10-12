@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import transaction
 
-from models import *
-from forms import *
+from sio.models import *
+from sio.forms import *
 
 import time
 current_milli_time = lambda: int(round(time.time() * 1000))
