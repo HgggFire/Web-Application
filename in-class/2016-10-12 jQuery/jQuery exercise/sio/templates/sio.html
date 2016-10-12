@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information Online Webapp</title>
+    <meta charset="utf-8">
+    {% load static %}
+    <script src="{% static "jquery-3.1.1.min.js" %}"></script>
+</head>
+
+<body>
+
+<ul id="messages">
+</ul>
+
+<p>Create a student:</p>
+<form id="create-student-form" method="post">
+  <table>
+    {{create_student_form}}
+  </table>
+  {% csrf_token %}
+  <input type="submit" value="Submit">
+</form>
+
+<hr>
+<p>Create a course:</p>
+<form id="create-course-form" method="post">
+  <table>
+    {{create_course_form}}
+  </table>
+  {% csrf_token %}
+  <input type="submit" value="Submit">
+</form>
+
+<hr>
+<p>Register a student for a course:</p>
+<form id="register-student-form" method="post">
+  <table>
+    {{register_student_form}}
+  </table>
+  {% csrf_token %}
+  <input type="submit" value="Submit">
+</form>
+
+<input type="hidden" id="timestamp" value="{{timestamp}}">
+
+<hr>
+<p>Current course rosters:
+<ul id="courses-list">
+{% for course in courses %}
+  <li>{{course}}<ul id="course-{{course.course_number}}">
+  {% for student in course.students.all %}
+    <li>{{student}}</li>
+  {% endfor %}
+  </ul></li>
+{% endfor %}
+</ul>
+</p>
+
+<script src="{% static "sio.js" %}"></script>
+</body>
+</html>

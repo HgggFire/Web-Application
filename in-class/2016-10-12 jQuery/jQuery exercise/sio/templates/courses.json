@@ -1,0 +1,9 @@
+{
+  "courses":[
+    {% for course in courses %}{% include 'course.json' %}{% if not forloop.last %}, {% endif %}{% endfor %}
+  ],
+  "messages":[
+    {% for message in messages %}"{{message}}"{% if not forloop.last %},{% endif %}{% endfor %}
+  ],
+  "timestamp": {{timestamp}}
+}
