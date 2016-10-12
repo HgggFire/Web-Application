@@ -8,9 +8,7 @@ Commit graded: d0d4738f5ee1273becb9008e5dd3c55edcb7b05b
 
 ### Fulfilling the grumblr specification (20/20)
 
-### Proper input validation (16/20)
-
--4, Your application does not check for empty string request parameters.  
+### Proper input validation (20/20)
 
 ### Request routing and configuration in Django (7/10)
 
@@ -24,7 +22,7 @@ Commit graded: d0d4738f5ee1273becb9008e5dd3c55edcb7b05b
 
 ---
 
-#### Total score (93/100)
+#### Total score (97/100)
 
 ---
 
