@@ -3,6 +3,17 @@ $('#create-student-form').on('submit', function(event) {
     event.preventDefault(); // Prevent form from being submitted
 
     // TODO:  Use jQuery to send an Ajax POST request to /sio/create-student.
+    var sForm = $("#create-student-form").serializeArray();
+    var values = {};
+    $.each(sForm, function (i, field) {
+        values[field.name] = field.value;
+    });
+    console.log(values);
+
+    $.post("/sio/create-student", values)
+      .done(function(data) {
+            updateChanges(data);
+      });
 });
 
 
@@ -10,6 +21,17 @@ $('#create-course-form').on('submit', function(event) {
     event.preventDefault(); // Prevent form from being submitted
 
     // TODO:  Use jQuery to send an Ajax POST request to /sio/create-course.
+    var sForm = $("#create-course-form").serializeArray();
+    var values = {};
+    $.each(sForm, function (i, field) {
+        values[field.name] = field.value;
+    });
+    console.log(values);
+
+    $.post("/sio/create-course", values)
+      .done(function(data) {
+            updateChanges(data);
+      });
 });
 
 
@@ -17,6 +39,17 @@ $('#register-student-form').on('submit', function(event) {
     event.preventDefault(); // Prevent form from being submitted
 
     // TODO:  Use jQuery to send an Ajax POST request to /sio/register-student.
+    var sForm = $("#register-student-form").serializeArray();
+    var values = {};
+    $.each(sForm, function (i, field) {
+        values[field.name] = field.value;
+    });
+    console.log(values);
+
+    $.post("/sio/register-student", values)
+      .done(function(data) {
+          updateChanges(data);
+      });
 });
 
 
@@ -31,6 +64,7 @@ function updateChanges(data) {
     $('#messages').append('<li>' + data.messages[i] + '</li>');
   }
 
+
   // Process courses
   for(var i = 0; i < data.courses.length; i++) {
 
@@ -39,6 +73,8 @@ function updateChanges(data) {
     if($('#course-' + course_num).length == 0) {
       $('#courses-list').append('<li>' + data.courses[i]['course'] + '<ul id="course-' + course_num + '"></ul></li>');
     }
+
+    $('#course-' + course_num).empty();
 
     // Add students to courses
     for(var j = 0; j < data.courses[i]['students'].length; j++) {

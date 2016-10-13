@@ -30,7 +30,7 @@ def create_student(request):
 
     form = CreateStudentForm(request.POST)
     if not form.is_valid():
-        messages.append('Form contained invalid data')
+        messages.append('Form1 contained invalid data')
         return render(request, 'courses.json', context, content_type='application/json')
 
     new_student = Student(andrew_id=form.cleaned_data['andrew_id'],
@@ -53,7 +53,7 @@ def create_course(request):
 
     form = CreateCourseForm(request.POST)
     if not form.is_valid():
-        messages.append('Form contained invalid data')
+        messages.append('Form2 contained invalid data')
         return render(request, 'courses.json', context, content_type='application/json')
 
     new_course = Course(course_number=form.cleaned_data['course_number'],
@@ -76,7 +76,7 @@ def register_student(request):
 
     form = RegisterStudentForm(request.POST)
     if not form.is_valid():
-        messages.append("Form contained invalid data")
+        messages.append("Form3 contained invalid data")
         return render(request, 'courses.json', context, content_type='application/json')
 
     course = Course.objects.get(course_number=form.cleaned_data['course_number'])
