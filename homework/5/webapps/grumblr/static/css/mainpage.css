@@ -1,0 +1,59 @@
+body {
+  padding-top: 120px;
+  padding-bottom: 40px;
+}
+
+/*.blog-post {
+    background-color: #eee;
+}*/
+
+
+.navbar {
+  background-color: #0085ff;
+  border-color: #0000ff;
+}
+
+.nav .navbar-nav .navbar-right li a {
+  color: #333300;
+}
+
+.navbar .navbar-brand {
+  color: #ddd;
+}
+
+.time {
+    color: #999;
+    padding-left: 15px;
+}
+
+
+.list-group {
+  margin-left: 30px;
+}
+
+.list-group-item.active {
+  background-color: #0085ff;
+}
+
+.blog-post {
+    padding-top: 10px;
+}
+
+#username {
+  color: #ffffff;
+}
+
+#friendsearch {
+  position: absolute;
+  top:7px;
+  right:5px;
+}
+
+#post_row {
+    padding: 15px;
+}
+
+#small_profile_picture {
+    height : 45px;
+    width : 45px;
+}
