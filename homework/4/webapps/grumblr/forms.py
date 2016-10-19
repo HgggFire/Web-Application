@@ -137,3 +137,24 @@ class EmailResetForm(forms.Form):
 
         # Generally return the cleaned data we got from our parent.
         return cleaned_data
+
+class PostForm(forms.Form):
+    post = forms.CharField(max_length = 42)
+
+    # Customizes form validation for properties that apply to more
+    # than one field.  Overrides the forms.Form.clean function.
+    def clean(self):
+        # Calls our parent (forms.Form) .clean function, gets a dictionary
+        # of cleaned data as a result
+        cleaned_data = super(PostForm, self).clean()
+
+        # Confirms that the andrewId is not already present in the
+        # Student model database.
+        post = self.cleaned_data.get('post')
+
+        # Checks the validity of the form data
+        if not post:
+            raise forms.ValidationError("Post cannot be empty.")
+
+        # Generally return the cleaned data we got from our parent.
+        return cleaned_data

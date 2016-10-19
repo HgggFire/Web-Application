@@ -15,7 +15,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/grumblr/">Grumblr</a>
+			<a class="navbar-brand" href="{% url 'home' %}">Grumblr</a>
 		</div>
 
 		<div id="navbar" class="collapse navbar-collapse">
@@ -23,8 +23,8 @@
 				<input type="text" class="form-control" placeholder="Search...">
 				<img src="{% static 'images/search_white.png' %}" width="25" height="25">
 				<img src="{% static 'images/account.png' %}" width="25" height="25">
-				<a id="username" href="/grumblr/profile/{{ request.user.username }}">{{ user.first_name }} {{ user.last_name }} </a>
-				<a href="logout" class="btn btn-info">Sign out</a>
+				<a id="username" href="{% url 'profile' request.user.username %}">{{ user.first_name }} {{ user.last_name }} </a>
+				<a href="{% url 'logout' %}" class="btn btn-info">Sign out</a>
 			</form>
 		</div><!--/.nav-collapse -->
 	</div>
@@ -37,7 +37,7 @@
             <h1>Follower Stream</h1>
 			{% for post in posts %}
 			<div class="blog-post">
-				<span><a href="/grumblr/profile/{{post.user.username}}">{{ post.user.first_name }} {{ post.user.last_name }}</a></span>
+				<span><a href="{% url 'profile' post.user.username %}">{{ post.user.first_name }} {{ post.user.last_name }}</a></span>
 				<span>
 					{% if post.user.profile.picture.name %}
 					<img src="{% url 'photo' post.user.username %}" id="small_profile_picture">
@@ -48,6 +48,7 @@
 				<span class="time">{{post.time}}</span>
 				<p>{{ post }}</p>
 				<a class="btn btn-warning" href="{% url 'unfollow' post.user.username %}" role="button">Unfollow</a>
+
 			</div>
 			<hr>
 			{% endfor %}

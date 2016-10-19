@@ -36,18 +36,33 @@ def home(request):
 
 @login_required
 def post(request):
-    errors = []
+    context = {}
+    posts = Post.objects.all().order_by("-time")
+    context['posts'] = posts
+    context['user'] = request.user
+
+    # Just display the registration form if this is a GET request
+    if request.method == 'GET':
+        context['form'] = PostForm()
+        return render(request, 'grumblr/mainpage.html', context)
+
+    # Creates a bound form from the request POST parameters and makes the
+    # form available in the request context dictionary.
+    form = PostForm(request.POST)
+    context['form'] = form
+
+    # Validates the form.
+    if not form.is_valid():
+        return render(request, 'grumblr/mainpage.html', context)
+
 
     # Creates a new item if it is present as a parameter in the request
-    if not 'post' in request.POST or not request.POST['post']:
-        errors.append('You must enter an item to add.')
-    else:
-        new_post = Post(post=request.POST['post'], user=request.user)
-        new_post.save()
+    new_post = Post(post=form.cleaned_data['post'], user=request.user)
+    new_post.save()
 
     posts = Post.objects.all().order_by("-time")
+    context['posts'] = posts
 
-    context = {'posts' : posts, 'errors' : errors, 'user' : request.user}
     return render(request, 'grumblr/mainpage.html', context)
 
 @login_required
@@ -61,8 +76,14 @@ def delete(request, id):
     except ObjectDoesNotExist:
         raise Http404
 
+    # get the profile of the user
+    try:
+        user_profile = Profile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        raise Http404
+
     posts = Post.objects.filter(user=request.user).order_by('-time')
-    context = {'posts' : posts, 'errors' : errors}
+    context = {'posts' : posts, 'errors' : errors, 'profile' : user_profile}
     return render(request, 'grumblr/profile.html', context)
 
 
@@ -188,7 +209,7 @@ def change_password(request):
 
 @login_required
 def edit_profile(request):
-    errors = []
+    print('editing')
     context = {}
 
     # get the profile of the user specified
@@ -213,6 +234,7 @@ def edit_profile(request):
         context['profile'] = profile
         return render(request, 'grumblr/edit_profile.html', context)
 
+    print('validated')
     # get the posts of the user specified
     posts_of_user = Post.objects.filter(user=request.user).order_by("-time")
 
@@ -233,7 +255,7 @@ def edit_profile(request):
     profile.save()
     request.user.save()
 
-    context = {'posts' : posts_of_user, 'errors' : errors, 'user' : request.user, 'profile' : profile}
+    context = {'posts' : posts_of_user, 'user' : request.user, 'profile' : profile}
     return render(request, 'grumblr/profile.html', context)
 
 
@@ -258,7 +280,6 @@ def get_photo(request, username):
 
 @login_required
 def go_edit(request):
-    errors = []
 
     # get the profile of the user specified
     try:
@@ -266,7 +287,7 @@ def go_edit(request):
     except ObjectDoesNotExist:
         raise Http404
 
-    context = {'errors' : errors, 'profile' : profile}
+    context = {'profile' : profile}
     return render(request, 'grumblr/edit_profile.html', context)
 
 @transaction.atomic
