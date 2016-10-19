@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information Webapp</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+{% if messages %}
+  {% for m in messages %}
+<p>{{m}}</p>
+  {% endfor %}
+{% endif %}
+
+<p>Find students by first name:</p>
+<form action="/sio/get-student" method="get">
+  <input type="text" name="first_name">
+  <input type="submit" value="Submit">
+</form>
+
+<p>Create a student:</p>
+<form action="/sio/create-student" method="post">
+  <table>
+    {{create_student_form}}
+  </table>
+  {% csrf_token %}
+  <input type="submit" value="Submit">
+</form>
+
+<hr>
+<p>Create a course:</p>
+<form action="/sio/create-course" method="post">
+  <table>
+    {{create_course_form}}
+  </table>
+  {% csrf_token %}
+  <input type="submit" value="Submit">
+</form>
+
+<hr>
+<p>Register a student for a course:</p>
+<form action="/sio/register-student" method="post">
+  <table>
+    {{register_student_form}}
+  </table>
+  {% csrf_token %}
+  <input type="submit" value="Submit">
+</form>
+
+<hr>
+<p>Current course rosters:
+<ul>
+{% for course in courses %}
+  <li>{{course}}<ul>
+  {% for student in course.students.all %}
+    <li>{{student}}</li>
+  {% endfor %}
+  </ul></li>
+{% endfor %}
+</ul>
+</p>
+
+</body>
