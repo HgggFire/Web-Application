@@ -450,22 +450,28 @@ def registration_confirmation(request, username, token):
 @login_required
 @transaction.atomic
 def get_changes(request, time="1970-01-01T00:00+00:00"):
-    print('\n')
-    print('get changes\n')
-    print(time)
+    # print('\n')
+    # print('get changes\n')
+    # print(time)
     max_time = Post.get_max_time()
-    print(max_time)
+    # print(max_time)
     posts = Post.get_changes(time)
     context = {"max_time":max_time, "posts":posts}
-    print('returning')
+    # print('returning')
     return render(request, 'posts.json', context, content_type='application/json')
 
 # Returns all recent changes to the database, as JSON
 @login_required
 @transaction.atomic
 def get_comments_changes(request, post_id, time="1970-01-01T00:00+00:00"):
+    if time == 'undefined':
+        print('undefined')
+        time="1970-01-01T00:00+00:00"
+    else:
+        print('defined!!!' + time)
     print(post_id)
     max_time = Comment.get_max_time()
+    # print('current maxtime:' + max_time)
     comments = Comment.get_changes(post_id, time)
     context = {"max_time":max_time, "comments":comments}
     return render(request, 'comments.json', context, content_type='application/json')
@@ -474,7 +480,7 @@ def get_comments_changes(request, post_id, time="1970-01-01T00:00+00:00"):
 @login_required
 @transaction.atomic
 def add_comment(request, post_id):
-    print('\nadding comment to post ' + post_id + '\n')
+    # print('\nadding comment to post ' + post_id + '\n')
     context = {}
 
     # if not 'comment' in request.POST or not request.POST['comment']:
@@ -484,21 +490,21 @@ def add_comment(request, post_id):
     if request.method == 'GET':
         context['form'] = CommentForm()
         return render(request, 'grumblr/mainpage.html', context)
-    print("1111")
+    # print("1111")
     # Creates a bound form from the request POST parameters and makes the
     # form available in the request context dictionary.
     form = CommentForm(request.POST)
     context['form'] = form
-    print("2222")
+    # print("2222")
     # Validates the form.
     if not form.is_valid():
         return render(request, 'grumblr/mainpage.html', context)
-    print("3333")
+    # print("3333")
     try:
         post = Post.objects.get(id=post_id)
     except ObjectDoesNotExist:
         return HttpResponse("The post did not exist")
-    print("4444")
+    # print("4444")
     # Creates a new comment if it is present as a parameter in the request
     new_comment = Comment(content=form.cleaned_data['comment'], user=request.user, post=post)
     new_comment.save()
@@ -506,6 +512,6 @@ def add_comment(request, post_id):
     comments = Comment.objects.filter(post=post).order_by("-time")
     context['comments'] = comments
 
-    print('\nadding finished\n')
+    # print('\nadding finished\n')
 
     return render(request, 'comments.json', context, content_type='application/json')

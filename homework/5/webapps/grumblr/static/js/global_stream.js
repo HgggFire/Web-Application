@@ -8,8 +8,7 @@ function populateList() {
           console.log(list.data('max-time'));
           list.html('')
 
-
-
+           getUpdates();
           for (var i = 0; i < data.posts.length; i++) {
               post = data.posts[i];
               var new_post = $(post.html);
@@ -21,6 +20,7 @@ function populateList() {
 }
 
 function addPost(){
+    console.log('adding post!')
     var postField = $("#post-field");
     $.post("/grumblr/post", {post: postField.val()})
       .done(function(data) {
@@ -59,26 +59,29 @@ function getUpdates() {
           }
 
             console.log('posts updated, updating comments');
-//           update the comments
+          // update the comments
           var all_posts = list.children("div.post-item");
           console.log(all_posts.length);
           console.log(data.posts.length);
           for (var j = 0; j < all_posts.length; j++) {
               post = all_posts[j];
               console.log('updating comments for post ' + post.id);
-              updateComments(post.id, data['max-time']);
+              updateComments(post.id);
           }
       });
 }
 
-function updateComments(id, max_time) {
+function updateComments(id) {
     var list = $("#comment-list" + id);
+//    list.empty();
+    var max_time = list.data("max-time")
     console.log('updating comment list ' + id);
     $.get("/grumblr/get-comments-changes/" + max_time + "/" + id)
       .done(function(data) {
+
+              console.log('get comments done.');
           list.data('max-time', data['max-time']);
           for (var i = 0; i < data.comments.length; i++) {
-              console.log('get comments done.');
               var comment = data.comments[i];
               var new_comment = $(comment.html);
               var max_time = list.data("max-time");
@@ -90,7 +93,7 @@ function updateComments(id, max_time) {
 $(document).ready(function () {
   // Add event-handlers
   console.log("ready!!");
-  $(".post-button").click(addPost);
+  $("#post-button").click(addPost);
 
   // Set up to-do list with initial DB items and DOM data
   populateList();

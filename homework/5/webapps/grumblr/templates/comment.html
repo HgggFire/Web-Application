@@ -1,5 +1,5 @@
 {% load static %}
-<div class='well'>
+<div class='well comment-block'>
     <a href={% url 'profile' user.username %}>
     {% if user.profile.picture.name %}
     <img src={% url 'photo' user.username %} id='comment_profile_picture'>

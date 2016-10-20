@@ -56,9 +56,23 @@ body {
 #small_profile_picture {
     height : 50px;
     width : 50px;
+    margin : 5px;
 }
 
 #comment_profile_picture {
     height : 40px;
     width : 40px;
+}
+
+.comment-block {
+    background-color: #eee;
+}
+
+.comment-list {
+    margin-top : 20px;
+}
+
+.comment-line {
+    margin-top : 15px;
+    margin-right: 60px;
 }

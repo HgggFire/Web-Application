@@ -31,6 +31,33 @@ class Post(models.Model):
     def get_max_time():
         return Post.objects.all().aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
 
+class Comment(models.Model):
+    content = models.CharField(max_length=420)
+    user = models.ForeignKey(User)  # one user can have many comments
+    post = models.ForeignKey(Post)  # one post can have many comments
+    time = models.DateTimeField(auto_now_add=True)
+    last_changed = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return self.content
+
+    # Returns all recent additions and deletions to the to-do list.
+    @staticmethod
+    def get_changes(id, changeTime="1970-01-01T00:00+00:00"):
+        print('time:    ' + changeTime)
+        post = Post.objects.get(id=id)
+        diff_comments = Comment.objects.filter(post=post, last_changed__gt=changeTime).distinct()
+        print("count: " + str(diff_comments.count()))
+        return diff_comments
+
+    # Generates the HTML-representation of a single comment item.
+    @property
+    def html(self):
+        return render_to_string("comment.html", {"user":self.user,"content":self.content,"time":self.time,"comment_id":self.id}).replace("\n", "");
+
+    @staticmethod
+    def get_max_time():
+        return Comment.objects.all().aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
 
 class Profile(models.Model):
     age = models.PositiveSmallIntegerField()
@@ -52,27 +79,3 @@ class Profile(models.Model):
         return profile
 
 
-class Comment(models.Model):
-    content = models.CharField(max_length=420)
-    user = models.ForeignKey(User)  # one user can have many comments
-    post = models.ForeignKey(Post)  # one post can have many comments
-    time = models.DateTimeField(auto_now_add=True)
-    last_changed = models.DateTimeField(auto_now=True)
-
-    def __unicode__(self):
-        return self.content
-
-    # Returns all recent additions and deletions to the to-do list.
-    @staticmethod
-    def get_changes(id, changetime="1970-01-01T00:00+00:00"):
-        post = Post.objects.get(id=id)
-        return Comment.objects.filter(last_changed__gt=changetime, post=post).distinct()
-
-    # Generates the HTML-representation of a single comment item.
-    @property
-    def html(self):
-        return render_to_string("comment.html", {"user":self.user,"content":self.content,"time":self.time,"comment_id":self.id}).replace("\n", "");
-
-    @staticmethod
-    def get_max_time():
-        return Post.objects.all().aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
