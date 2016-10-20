@@ -15,7 +15,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/grumblr/mainpage">Grumblr</a>
+			<a class="navbar-brand" href="{% url 'home' %}">Grumblr</a>
 		</div>
 
 		<div id="navbar" class="collapse navbar-collapse">
@@ -23,8 +23,8 @@
 				<input type="text" class="form-control" placeholder="Search...">
 				<img src="{% static 'images/search_white.png' %}" width="25" height="25">
 				<img src="{% static 'images/account.png' %}" width="25" height="25">
-				<a id="username" href="/grumblr/profile/{{ request.user.username }}">{{ request.user.first_name }} {{ request.user.last_name }}</a>
-				<a href="/grumblr/logout" class="btn btn-info">Sign out</a>
+				<a id="username" href="{% url 'profile' request.user.username %}">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+				<a href="{% url 'logout' %}" class="btn btn-info">Sign out</a>
 			</form>
 
 		</div><!--/.nav-collapse -->

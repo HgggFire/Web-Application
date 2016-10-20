@@ -9,6 +9,8 @@
 	    {% block description %}{% endblock %}
 	    <meta name="author" content="Zhiqiao Lin">
 	    <link rel="icon" href="./images/favicon.ico">
+		<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+		{% block js %}{% endblock %}
 
 	    <title>{% block title %}Grumblr{% endblock %}</title>
 
@@ -16,13 +18,13 @@
 	    <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
 
 	    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	    <link href="{% static 'bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css' % }" rel="stylesheet">
+	    <link href="{% static 'bootstrap/docs/assets/css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
 
 	    <!-- Custom styles for this template -->
 		{% block css %}
 		{% endblock %}
 
-    	<script src="{% static 'bootstrap/docs/assets/js/ie-emulation-modes-warning.js' % }"></script>
+    	<script src="{% static 'bootstrap/docs/assets/js/ie-emulation-modes-warning.js' %}"></script>
 
 	</head>
 

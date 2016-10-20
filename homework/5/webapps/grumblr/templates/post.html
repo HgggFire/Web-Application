@@ -1,0 +1,14 @@
+{% load static %}
+<div class='blog-post'>
+    <span><a href={% url 'profile' user.username %}>{{ user.first_name }} {{ user.last_name }}</a></span>
+    <span>
+        {% if user.profile.picture.name %}
+        <img src={% url 'photo' user.username %} id='small_profile_picture'>
+        {% else %}
+        <img src={% static 'images/profile_picture.jpg' %} id='small_profile_picture'>
+        {% endif %}
+    </span>
+    <span class='time'>{{ time }}</span>
+    <p>{{ post }}</p>
+</div>
+<hr>
