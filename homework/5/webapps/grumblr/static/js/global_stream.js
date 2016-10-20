@@ -1,15 +1,21 @@
 function populateList() {
+    console.log('populating list!');
     $.get("/grumblr/get-changes")
       .done(function(data) {
+            console.log('get-changes returned');
           var list = $("#post-list");
           list.data('max-time', data['max-time']);
           console.log(list.data('max-time'));
           list.html('')
+
+
+
           for (var i = 0; i < data.posts.length; i++) {
               post = data.posts[i];
               var new_post = $(post.html);
               new_post.data("post-id", post.id);
               list.prepend(new_post);
+//              console.log(new_post.data("post-id"));
           }
       });
 }
@@ -23,19 +29,60 @@ function addPost(){
       });
 }
 
+function addComment(post_id){
+    console.log('sadding comment!')
+//    var post_id = $(e.target).parents("well").data("post-id");
+    var commentField = $("#comment-field"+post_id);
+    console.log("adding comment: " + commentField.val() + " to post: " + post_id);
+    $.post("/grumblr/add-comment/" + post_id, {comment: commentField.val()})
+      .done(function(data) {
+            console.log('comment added');
+            console.log('getting updates');
+          getUpdates();
+      });
+}
 
 function getUpdates() {
-    console.log('get changes!');
     var list = $("#post-list")
     var max_time = list.data("max-time")
-    $.get("/grumblr/get-changes/"+ max_time)
+    console.log('getting changes');
+    $.get("/grumblr/get-changes/" + max_time)
       .done(function(data) {
+            console.log('changes got');
           list.data('max-time', data['max-time']);
+          // update the posts
           for (var i = 0; i < data.posts.length; i++) {
               var post = data.posts[i];
               var new_post = $(post.html);
               new_post.data("post-id", post.id);
               list.prepend(new_post);
+          }
+
+            console.log('posts updated, updating comments');
+//           update the comments
+          var all_posts = list.children("div.post-item");
+          console.log(all_posts.length);
+          console.log(data.posts.length);
+          for (var j = 0; j < all_posts.length; j++) {
+              post = all_posts[j];
+              console.log('updating comments for post ' + post.id);
+              updateComments(post.id, data['max-time']);
+          }
+      });
+}
+
+function updateComments(id, max_time) {
+    var list = $("#comment-list" + id);
+    console.log('updating comment list ' + id);
+    $.get("/grumblr/get-comments-changes/" + max_time + "/" + id)
+      .done(function(data) {
+          list.data('max-time', data['max-time']);
+          for (var i = 0; i < data.comments.length; i++) {
+              console.log('get comments done.');
+              var comment = data.comments[i];
+              var new_comment = $(comment.html);
+              var max_time = list.data("max-time");
+              list.append(new_comment);
           }
       });
 }
@@ -43,14 +90,16 @@ function getUpdates() {
 $(document).ready(function () {
   // Add event-handlers
   console.log("ready!!");
-  $("#post-button").click(addPost);
+  $(".post-button").click(addPost);
 
   // Set up to-do list with initial DB items and DOM data
   populateList();
   $("#post-field").focus();
+  console.log('list populated')
+//  $(".comment-button").click(addComment);
 
   // Periodically refresh to-do list every 5 seconds
-  window.setInterval(getUpdates, 5000);
+//  window.setInterval(getUpdates, 5000);
 
   // CSRF set-up copied from Django docs
   function getCookie(name) {

@@ -158,3 +158,25 @@ class PostForm(forms.Form):
 
         # Generally return the cleaned data we got from our parent.
         return cleaned_data
+
+class CommentForm(forms.Form):
+    comment = forms.CharField(max_length = 420)
+
+    # Customizes form validation for properties that apply to more
+    # than one field.  Overrides the forms.Form.clean function.
+    def clean(self):
+        # Calls our parent (forms.Form) .clean function, gets a dictionary
+        # of cleaned data as a result
+        cleaned_data = super(CommentForm, self).clean()
+
+        # Confirms that the andrewId is not already present in the
+        # Student model database.
+        comment = self.cleaned_data.get('comment')
+
+        # Checks the validity of the form data
+        if not comment:
+            raise forms.ValidationError("Comment cannot be empty.")
+            print('invalid')
+
+        # Generally return the cleaned data we got from our parent.
+        return cleaned_data

@@ -54,6 +54,11 @@ body {
 }
 
 #small_profile_picture {
-    height : 45px;
-    width : 45px;
+    height : 50px;
+    width : 50px;
+}
+
+#comment_profile_picture {
+    height : 40px;
+    width : 40px;
 }
