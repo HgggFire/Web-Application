@@ -22,6 +22,13 @@ class Post(models.Model):
     def get_changes(changetime="1970-01-01T00:00+00:00"):
         return Post.objects.filter(last_changed__gt=changetime).distinct()
 
+    @staticmethod
+    def get_changes_follower(req_user, changetime="1970-01-01T00:00+00:00"):
+        profile=Profile.objects.get(user=req_user)
+        followees = profile.followees.all()
+        posts = Post.objects.filter(user__in=followees, last_changed__gt=changetime).distinct().order_by("time")
+        return posts
+
     # Generates the HTML-representation of a single post item.
     @property
     def html(self):
@@ -30,6 +37,13 @@ class Post(models.Model):
     @staticmethod
     def get_max_time():
         return Post.objects.all().aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
+
+    @staticmethod
+    def get_max_time_follower(req_user):
+        profile=Profile.objects.get(user=req_user)
+        followees = profile.followees.all()
+        posts = Post.objects.filter(user__in=followees).distinct()
+        return posts.aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
 
 class Comment(models.Model):
     content = models.CharField(max_length=420)
@@ -46,9 +60,10 @@ class Comment(models.Model):
     def get_changes(id, changeTime="1970-01-01T00:00+00:00"):
         print('time:    ' + changeTime)
         post = Post.objects.get(id=id)
-        diff_comments = Comment.objects.filter(post=post, last_changed__gt=changeTime).distinct()
+        diff_comments = Comment.objects.filter(post=post, last_changed__gt=changeTime).distinct().order_by("time")
         print("count: " + str(diff_comments.count()))
         return diff_comments
+
 
     # Generates the HTML-representation of a single comment item.
     @property
@@ -58,6 +73,12 @@ class Comment(models.Model):
     @staticmethod
     def get_max_time():
         return Comment.objects.all().aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
+
+    @staticmethod
+    def get_max_time_follower(post_id):
+        post = Post.objects.get(id=post_id)
+        comments = Comment.objects.filter(post=post).distinct()
+        return comments.aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
 
 class Profile(models.Model):
     age = models.PositiveSmallIntegerField()

@@ -4,6 +4,9 @@
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/mainpage.css' %}">
 {% endblock %}
+{% block js %}
+    <script src="{% static 'js/follower_stream.js' %}" type="text/javascript"></script>
+{% endblock %}
 {% block description %}<meta name="description" content="Follower Stream page">{% endblock %}
 {% block content %}
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -35,23 +38,8 @@
 	<div class="row row-offcanvas row-offcanvas-right">
 		<div class="col-xs-12 col-sm-8 blog-main">
             <h1>Follower Stream</h1>
-			{% for post in posts %}
-			<div class="blog-post">
-				<span><a href="{% url 'profile' post.user.username %}">{{ post.user.first_name }} {{ post.user.last_name }}</a></span>
-				<span>
-					{% if post.user.profile.picture.name %}
-					<img src="{% url 'photo' post.user.username %}" id="small_profile_picture">
-					{% else %}
-					<img src="{% static 'images/profile_picture.jpg' %}" id="small_profile_picture">
-					{% endif %}
-				</span>
-				<span class="time">{{post.time}}</span>
-				<p>{{ post }}</p>
-				<a class="btn btn-warning" href="{% url 'unfollow' post.user.username %}" role="button">Unfollow</a>
-
-			</div>
-			<hr>
-			{% endfor %}
+			<!--all the posts are listed here-->
+			<div id='post-list'></div>
 	  </div>
 
 	  <div class="col-xs-6 col-sm-4 sidebar-offcanvas" id="sidebar">

@@ -111,6 +111,7 @@ def profile(request, username):
     context = {'posts' : posts_of_user, 'user' : post_user, 'profile' : post_user_profile, 'followees' : followees}
     return render(request, 'grumblr/profile.html', context)
 
+# let the logged in user follow some other user
 @login_required
 def follow(request, username):
     try:
@@ -120,33 +121,23 @@ def follow(request, username):
 
     # get the profile of the user specified
     try:
-        profile = Profile.objects.get(user=request.user)
+        request_user_profile = Profile.objects.get(user=request.user)
     except ObjectDoesNotExist:
         raise Http404
 
-    profile.followees.add(post_user);
-    profile.save()
+    request_user_profile.followees.add(post_user);
+    request_user_profile.save()
 
-    followees = profile.followees.all()
+    request_user_followees=request_user_profile.followees.all()
 
+    post_user_profile=Profile.objects.get(user=post_user)
+    followees = post_user_profile.followees.all()
     posts = Post.objects.filter(user__in=followees).order_by("-time")
 
-    return render(request, 'grumblr/follower_stream.html', {'posts' : posts, 'user' : request.user, 'followees' : followees})
+    context = {'posts' : posts, 'user' : post_user, 'profile' : post_user_profile, 'followees' : request_user_followees}
+    return render(request, 'grumblr/profile.html', context)
 
-@login_required
-def follower_stream(request, username):
-    # get the profile of the user specified
-    try:
-        profile = Profile.objects.get(user=request.user)
-    except ObjectDoesNotExist:
-        raise Http404
-
-    followees = profile.followees.all()
-
-    posts = Post.objects.filter(user__in=followees).order_by("-time")
-
-    return render(request, 'grumblr/follower_stream.html', {'posts' : posts, 'user' : request.user, 'followees' : followees})
-
+# let the logged in user unfollow some other user
 @login_required
 def unfollow(request, username):
     try:
@@ -163,12 +154,30 @@ def unfollow(request, username):
     profile.followees.remove(post_user);
     profile.save()
 
-    followees = profile.followees.all()
+    request_user_followees = profile.followees.all();
 
+    post_user_profile=Profile.objects.get(user=post_user)
+    followees = post_user_profile.followees.all()
+    posts = Post.objects.filter(user__in=followees).order_by("-time")
+
+    context = {'posts' : posts, 'user' : post_user, 'profile' : post_user_profile, 'followees' : request_user_followees}
+    return render(request, 'grumblr/profile.html', context)
+
+# go to the follower stream
+@login_required
+def follower_stream(request, username):
+    # get the profile of the user specified
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        raise Http404
+
+    followees = profile.followees.all()
     posts = Post.objects.filter(user__in=followees).order_by("-time")
 
     return render(request, 'grumblr/follower_stream.html', {'posts' : posts, 'user' : request.user, 'followees' : followees})
 
+# let logged in user change their own password
 @login_required()
 def change_password(request):
     errors = []
@@ -209,7 +218,7 @@ def change_password(request):
     return render(request, 'grumblr/profile.html', context)
 
 
-
+# from the edit-profile page, let logged in user edit their own profile
 @login_required
 def edit_profile(request):
     print('editing')
@@ -261,7 +270,7 @@ def edit_profile(request):
     context = {'posts' : posts_of_user, 'user' : request.user, 'profile' : profile}
     return render(request, 'grumblr/profile.html', context)
 
-
+# get the user profile photos
 @login_required
 def get_photo(request, username):
     # get the profile of the user specified
@@ -280,10 +289,9 @@ def get_photo(request, username):
 
     return HttpResponse(profile.picture, content_type=content_type)
 
-
+# go to the edit-profile page
 @login_required
 def go_edit(request):
-
     # get the profile of the user specified
     try:
         profile = Profile.objects.get(user=request.user)
@@ -293,6 +301,7 @@ def go_edit(request):
     context = {'profile' : profile}
     return render(request, 'grumblr/edit_profile.html', context)
 
+# let new user register
 @transaction.atomic
 def register(request):
     context = {}
@@ -338,10 +347,12 @@ def register(request):
     context['email'] = form.cleaned_data['email']
     return render(request, 'grumblr/email_confirmation.html', context)
 
+# let user who forgot password go to the reset-password page
 @transaction.atomic
 def go_reset(request):
     return render(request, 'grumblr/reset_password.html')
 
+# let user reset password through email
 @transaction.atomic
 def reset_password(request):
     context = {}
@@ -379,6 +390,7 @@ def reset_password(request):
     context['email'] = form.cleaned_data['email']
     return render(request, 'grumblr/reset_email_confirmation.html', context)
 
+
 @transaction.atomic
 def password_reset_confirmation(request, username, token):
     context = {}
@@ -391,7 +403,7 @@ def password_reset_confirmation(request, username, token):
         raise Http404
 
     context['user'] = user
-    # # Logs in the new user and redirects to mainpage
+    # Logs in the new user and redirects to mainpage
     # user = authenticate(username=user.username, \
     #                         password=user.password)
     return render(request, 'grumblr/reset_password_form.html', context)
@@ -471,7 +483,7 @@ def get_comments_changes(request, post_id, time="1970-01-01T00:00+00:00"):
         print('defined!!!' + time)
     print(post_id)
     max_time = Comment.get_max_time()
-    # print('current maxtime:' + max_time)
+
     comments = Comment.get_changes(post_id, time)
     context = {"max_time":max_time, "comments":comments}
     return render(request, 'comments.json', context, content_type='application/json')
@@ -480,31 +492,27 @@ def get_comments_changes(request, post_id, time="1970-01-01T00:00+00:00"):
 @login_required
 @transaction.atomic
 def add_comment(request, post_id):
-    # print('\nadding comment to post ' + post_id + '\n')
     context = {}
-
-    # if not 'comment' in request.POST or not request.POST['comment']:
-    #     raise Http404
 
     # Just display the comment form if this is a GET request
     if request.method == 'GET':
         context['form'] = CommentForm()
         return render(request, 'grumblr/mainpage.html', context)
-    # print("1111")
+
     # Creates a bound form from the request POST parameters and makes the
     # form available in the request context dictionary.
     form = CommentForm(request.POST)
     context['form'] = form
-    # print("2222")
+
     # Validates the form.
     if not form.is_valid():
         return render(request, 'grumblr/mainpage.html', context)
-    # print("3333")
+
     try:
         post = Post.objects.get(id=post_id)
     except ObjectDoesNotExist:
         return HttpResponse("The post did not exist")
-    # print("4444")
+
     # Creates a new comment if it is present as a parameter in the request
     new_comment = Comment(content=form.cleaned_data['comment'], user=request.user, post=post)
     new_comment.save()
@@ -512,6 +520,25 @@ def add_comment(request, post_id):
     comments = Comment.objects.filter(post=post).order_by("-time")
     context['comments'] = comments
 
-    # print('\nadding finished\n')
+    return render(request, 'comments.json', context, content_type='application/json')
 
+# Returns all recent changes to the database, as JSON
+@login_required
+@transaction.atomic
+def get_changes_follower(request, time="1970-01-01T00:00+00:00"):
+    max_time = Post.get_max_time_follower(request.user)
+    posts = Post.get_changes_follower(request.user, time)
+    context = {"max_time":max_time, "posts":posts}
+    return render(request, 'posts.json', context, content_type='application/json')
+
+# Returns all recent changes to the database, as JSON
+@login_required
+@transaction.atomic
+def get_comments_changes_follower(request, post_id, time="1970-01-01T00:00+00:00"):
+    if time == 'undefined' or time == '':
+        time="1970-01-01T00:00+00:00"
+    print(post_id)
+    max_time = Comment.get_max_time_follower(post_id)
+    comments = Comment.get_changes(post_id, time)
+    context = {"max_time":max_time, "comments":comments}
     return render(request, 'comments.json', context, content_type='application/json')
