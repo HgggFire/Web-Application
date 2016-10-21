@@ -86,3 +86,13 @@ def register_student(request):
     messages.append('Added %s to %s' % (student, course))
 
     return render(request, 'courses.json', context, content_type='application/json')
+
+# Returns all recent changes to the database, as JSON
+def get_changes(request):
+    try:
+        timestamp = float(request.POST['timestamp'])
+    except:
+        timestamp = 0.0
+    courses = Course.get_changes(timestamp)
+    context = {"timestamp": current_milli_time(), "courses": courses}
+    return render(request, 'courses.json', context, content_type='application/json')

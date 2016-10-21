@@ -65,7 +65,7 @@ function updateComments(id) {
     var list = $("#comment-list" + id);
     var max_time = list.data("max-time")
     console.log('updating comment list ' + id);
-    $.get("/grumblr/get-comments-changes-follower/" + max_time + "/" + id)
+    $.get("/grumblr/get-comments-changes-for-post/" + max_time + "/" + id)
       .done(function(data) {
 
               console.log('get comments done.');

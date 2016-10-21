@@ -29,6 +29,11 @@ class Post(models.Model):
         posts = Post.objects.filter(user__in=followees, last_changed__gt=changetime).distinct().order_by("time")
         return posts
 
+    @staticmethod
+    def get_changes_profile(profile_user, changetime="1970-01-01T00:00+00:00"):
+        posts = Post.objects.filter(user=profile_user, last_changed__gt=changetime).distinct().order_by("time")
+        return posts
+
     # Generates the HTML-representation of a single post item.
     @property
     def html(self):
@@ -43,6 +48,11 @@ class Post(models.Model):
         profile=Profile.objects.get(user=req_user)
         followees = profile.followees.all()
         posts = Post.objects.filter(user__in=followees).distinct()
+        return posts.aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
+
+    @staticmethod
+    def get_max_time_profile(profile_user):
+        posts = Post.objects.filter(user=profile_user).distinct()
         return posts.aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
 
 class Comment(models.Model):

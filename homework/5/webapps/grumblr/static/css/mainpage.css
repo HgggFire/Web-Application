@@ -62,6 +62,7 @@ body {
 #comment_profile_picture {
     height : 40px;
     width : 40px;
+    margin : 5px;
 }
 
 .comment-block {
@@ -75,4 +76,8 @@ body {
 .comment-line {
     margin-top : 15px;
     margin-right: 60px;
+}
+
+.post_content, .comment_content {
+    margin : 5px;
 }

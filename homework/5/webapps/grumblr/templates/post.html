@@ -9,7 +9,15 @@
     <span>{{ user.first_name }} {{ user.last_name }}</span>
     </a>
     <span class='time'>{{ time }}</span>
-    <div>{{ post }}</div>
+    <div class='post_content'>{{ post }}</div>
+
+
+    <span class='btn btn-default' href='#' role='button'>Like</span>
+    {% if request.user == user %}
+    <form method='post' action={% url 'delete' post.id %} >
+        <span> <input type='submit' class='btn btn-danger delete-btn' value='Delete'></span>
+    </form>
+    {% endif %}
 
     <div class='row row-offcanvas comment-line'>
         <div class='col-xs-11 col-sm-11 blog-main'>

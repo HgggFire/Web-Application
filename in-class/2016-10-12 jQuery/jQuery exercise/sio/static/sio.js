@@ -12,7 +12,7 @@ $('#create-student-form').on('submit', function(event) {
 
     $.post("/sio/create-student", values)
       .done(function(data) {
-            updateChanges(data);
+            getUpdates();
       });
 });
 
@@ -30,7 +30,7 @@ $('#create-course-form').on('submit', function(event) {
 
     $.post("/sio/create-course", values)
       .done(function(data) {
-            updateChanges(data);
+            getUpdates();
       });
 });
 
@@ -48,7 +48,7 @@ $('#register-student-form').on('submit', function(event) {
 
     $.post("/sio/register-student", values)
       .done(function(data) {
-          updateChanges(data);
+          getUpdates();
       });
 });
 
@@ -63,7 +63,6 @@ function updateChanges(data) {
   for(var i = 0; i < data.messages.length; i++) {
     $('#messages').append('<li>' + data.messages[i] + '</li>');
   }
-
 
   // Process courses
   for(var i = 0; i < data.courses.length; i++) {
@@ -86,12 +85,22 @@ function updateChanges(data) {
   $('#timestamp').val(data.timestamp);
 }
 
+function getUpdates() {
+    $.get("sio/get-changes")
+        .done(function(data) {
+            updateChanges(data);
+        });
+}
 
 // The boilerplate code below is copied from the Django 1.10 documentation.
 // It establishes the necessary HTTP header fields and cookies to use
 // Django CSRF protection with jQuery Ajax requests.
 
 $( document ).ready(function() {  // Runs when the document is ready
+
+
+  // Periodically refresh to-do list every 5 seconds
+  window.setInterval(getUpdates, 5000);
 
   // using jQuery
   // https://docs.djangoproject.com/en/1.10/ref/csrf/
@@ -110,6 +119,7 @@ $( document ).ready(function() {  // Runs when the document is ready
     }
     return cookieValue;
   }
+
 
   var csrftoken = getCookie('csrftoken');
 

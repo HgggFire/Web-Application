@@ -63,7 +63,7 @@ $(document).ready(function () {
   populateList();
   $("#item-field").focus();
 
-  // Periodically refresh to-do list
+  // Periodically refresh to-do list every 5 seconds
   window.setInterval(getUpdates, 5000);
 
   // CSRF set-up copied from Django docs

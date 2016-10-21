@@ -165,7 +165,7 @@ def unfollow(request, username):
 
 # go to the follower stream
 @login_required
-def follower_stream(request, username):
+def follower_stream(request):
     # get the profile of the user specified
     try:
         profile = Profile.objects.get(user=request.user)
@@ -534,7 +534,7 @@ def get_changes_follower(request, time="1970-01-01T00:00+00:00"):
 # Returns all recent changes to the database, as JSON
 @login_required
 @transaction.atomic
-def get_comments_changes_follower(request, post_id, time="1970-01-01T00:00+00:00"):
+def get_comments_changes_for_post(request, post_id, time="1970-01-01T00:00+00:00"):
     if time == 'undefined' or time == '':
         time="1970-01-01T00:00+00:00"
     print(post_id)
@@ -542,3 +542,14 @@ def get_comments_changes_follower(request, post_id, time="1970-01-01T00:00+00:00
     comments = Comment.get_changes(post_id, time)
     context = {"max_time":max_time, "comments":comments}
     return render(request, 'comments.json', context, content_type='application/json')
+
+# Returns all recent changes to the database, as JSON
+@login_required
+@transaction.atomic
+def get_changes_profile(request, username, time="1970-01-01T00:00+00:00"):
+    profile_user = User.objects.get(username=username)
+    max_time = Post.get_max_time_profile(profile_user)
+    posts = Post.get_changes_profile(profile_user, time)
+    context = {"max_time":max_time, "posts":posts}
+    return render(request, 'posts.json', context, content_type='application/json')
+
