@@ -1,20 +1,9 @@
+@import "base.css";
+
 body {
   padding-top: 50px;
   padding-bottom: 40px;
   background-color: #eee;
-}
-
-.navbar {
-  background-color: #0085ff;
-  border-color: #0000ff;
-}
-
-.navbar .navbar-brand {
-  color: #ddd;
-}
-
-.btn-block {
-  background-color: #0085ff;
 }
 
 .starter-template {

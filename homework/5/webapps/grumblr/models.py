@@ -68,10 +68,8 @@ class Comment(models.Model):
     # Returns all recent additions and deletions to the to-do list.
     @staticmethod
     def get_changes(id, changeTime="1970-01-01T00:00+00:00"):
-        print('time:    ' + changeTime)
         post = Post.objects.get(id=id)
         diff_comments = Comment.objects.filter(post=post, last_changed__gt=changeTime).distinct().order_by("time")
-        print("count: " + str(diff_comments.count()))
         return diff_comments
 
 
@@ -106,7 +104,6 @@ class Profile(models.Model):
             profile = Profile.objects.get(user=user)
         except ObjectDoesNotExist:
             print('The profile does not exist.')
-
         return profile
 
 

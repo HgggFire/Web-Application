@@ -1,12 +1,9 @@
 function populateList() {
-    console.log('populating list!');
     var username = $(".navbar-fixed-top").attr("name")
     $.get("/grumblr/get-changes-profile/" + username)
       .done(function(data) {
-            console.log('get-changes returned');
           var list = $("#post-list");
           list.data('max-time', data['max-time']);
-          console.log(list.data('max-time'));
           list.html('')
 
           getUpdates();
@@ -20,14 +17,10 @@ function populateList() {
 }
 
 function addComment(post_id){
-    console.log('adding comment!')
 //    var post_id = $(e.target).parents("well").data("post-id");
     var commentField = $("#comment-field"+post_id);
-    console.log("adding comment: " + commentField.val() + " to post: " + post_id);
     $.post("/grumblr/add-comment/" + post_id, {comment: commentField.val()})
       .done(function(data) {
-            console.log('comment added');
-            console.log('getting updates');
           getUpdates();
       });
 }
@@ -35,11 +28,9 @@ function addComment(post_id){
 function getUpdates() {
     var list = $("#post-list")
     var max_time = list.data("max-time")
-    console.log('getting changes');
     var username = $(".navbar-fixed-top").attr("name")
     $.get("/grumblr/get-changes-profile/" + username + "/" + max_time)
       .done(function(data) {
-            console.log('changes got');
           list.data('max-time', data['max-time']);
           // update the posts
           for (var i = 0; i < data.posts.length; i++) {
@@ -49,14 +40,10 @@ function getUpdates() {
               list.prepend(new_post);
           }
 
-            console.log('posts updated, updating comments');
           // update the comments
           var all_posts = list.children("div.post-item");
-          console.log(all_posts.length);
-          console.log(data.posts.length);
           for (var j = 0; j < all_posts.length; j++) {
               post = all_posts[j];
-              console.log('updating comments for post ' + post.id);
               updateComments(post.id);
           }
       });
@@ -65,11 +52,8 @@ function getUpdates() {
 function updateComments(id) {
     var list = $("#comment-list" + id);
     var max_time = list.data("max-time")
-    console.log('updating comment list ' + id);
     $.get("/grumblr/get-comments-changes-for-post/" + max_time + "/" + id)
       .done(function(data) {
-
-              console.log('get comments done.');
           list.data('max-time', data['max-time']);
           for (var i = 0; i < data.comments.length; i++) {
               var comment = data.comments[i];
@@ -82,11 +66,9 @@ function updateComments(id) {
 
 $(document).ready(function () {
   // Add event-handlers
-  console.log("ready!!");
 
   // Set up to-do list with initial DB items and DOM data
   populateList();
-  console.log('list populated')
 
   // Periodically refresh to-do list every 5 seconds
   window.setInterval(getUpdates, 5000);

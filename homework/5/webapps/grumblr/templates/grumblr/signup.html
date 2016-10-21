@@ -52,19 +52,13 @@
 
 			<div class="row">
 				<div class="col-xs-8 col-lg-8">
-					<input class="btn btn-lg btn-success btn-block" type="submit" value="Sign up">
+					<input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign up">
 				</div>
 				<div class="col-xs-4 col-lg-4">
 					<p id="oldusr">Old user?</p>
 					<a href="{% url 'home' %}"><p>Sign in</p></a>
 				</div>
 			</div>
-			<!--&lt;!&ndash;error messages&ndash;&gt;-->
-			<!--{% for error in errors %}-->
-			<!--<p style="color: red">-->
-			<!--{{ error }}-->
-			<!--</p>-->
-			<!--{% endfor %}-->
 
 			{% csrf_token %}
 		</form><!-- form -->

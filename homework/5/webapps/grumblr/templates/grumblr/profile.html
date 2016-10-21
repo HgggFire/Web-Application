@@ -27,7 +27,7 @@
 				<img src="{% static 'images/search_white.png' %}" width="25" height="25">
 				<img src="{% static 'images/account.png' %}" width="25" height="25">
 				<a id="username" href="{% url 'profile' request.user.username %}">{{ request.user.first_name }} {{ request.user.last_name }}</a>
-				<a href="{% url 'logout' %}" class="btn btn-info">Sign out</a>
+				<a href="{% url 'logout' %}" class="btn btn-success">Sign out</a>
 			</form>
 
 		</div><!--/.nav-collapse -->
@@ -61,11 +61,11 @@
 			<div class="list-group" id="info_bar">
 				<div class="list-group-item active"><img id="friendsearch" src="{% static 'images/account.svg' %}" width="35" height="35">Info
 					{% if user == request.user %}
-					<a class="btn btn-default" href="{% url 'go_edit' %}">Edit Profile</a>
+					<a class="btn btn-default btn-edit" href="{% url 'go_edit' %}">Edit Profile</a>
 					{% elif user in followees %}
-					<a class="btn btn-warning" href="{% url 'unfollow' user.username %}">Unfollow</a>
+					<a class="btn btn-warning btn-unfollow" href="{% url 'unfollow' user.username %}">Unfollow</a>
 					{% else %}
-					<a class="btn btn-info" href="{% url 'follow' user.username %}">Follow</a>
+					<a class="btn btn-success btn-follow" href="{% url 'follow' user.username %}">Follow</a>
 					{% endif %}
 				</div>
 			</div>

@@ -20,8 +20,6 @@ from django.core.urlresolvers import reverse
 
 from django.core.mail import send_mail
 from django.db import transaction
-import time
-current_milli_time = lambda: int(round(time.time() * 1000))
 
 @login_required
 def home(request):
@@ -39,15 +37,11 @@ def home(request):
 @login_required
 def post(request):
     context = {}
-    # if not 'post' in request.POST or not request.POST['post']:
-    #     raise Http404
-    print('2')
     # Just display the post form if this is a GET request
     if request.method == 'GET':
         context['form'] = PostForm()
         return render(request, 'grumblr/mainpage.html', context)
 
-    print('3')
     # Creates a bound form from the request POST parameters and makes the
     # form available in the request context dictionary.
     form = PostForm(request.POST)
@@ -57,15 +51,12 @@ def post(request):
     if not form.is_valid():
         return render(request, 'grumblr/mainpage.html', context)
 
-    print('4')
-
     # Creates a new item if it is present as a parameter in the request
     new_post = Post(post=form.cleaned_data['post'], user=request.user)
     new_post.save()
 
     posts = Post.objects.all().order_by("-time")
     context['posts'] = posts
-    print('6')
     return render(request, 'posts.json', context, content_type='application/json')
 
 @login_required
@@ -209,7 +200,6 @@ def change_password(request):
     # get the posts of the user specified
     posts = Post.objects.filter(user=request.user).order_by("-time")
 
-
     user = authenticate(username=user.username, \
                             password=user.password)
     login(request, user)
@@ -221,7 +211,6 @@ def change_password(request):
 # from the edit-profile page, let logged in user edit their own profile
 @login_required
 def edit_profile(request):
-    print('editing')
     context = {}
 
     # get the profile of the user specified
@@ -246,7 +235,6 @@ def edit_profile(request):
         context['profile'] = profile
         return render(request, 'grumblr/edit_profile.html', context)
 
-    print('validated')
     # get the posts of the user specified
     posts_of_user = Post.objects.filter(user=request.user).order_by("-time")
 
@@ -462,14 +450,9 @@ def registration_confirmation(request, username, token):
 @login_required
 @transaction.atomic
 def get_changes(request, time="1970-01-01T00:00+00:00"):
-    # print('\n')
-    # print('get changes\n')
-    # print(time)
     max_time = Post.get_max_time()
-    # print(max_time)
     posts = Post.get_changes(time)
     context = {"max_time":max_time, "posts":posts}
-    # print('returning')
     return render(request, 'posts.json', context, content_type='application/json')
 
 # Returns all recent changes to the database, as JSON
@@ -477,11 +460,7 @@ def get_changes(request, time="1970-01-01T00:00+00:00"):
 @transaction.atomic
 def get_comments_changes(request, post_id, time="1970-01-01T00:00+00:00"):
     if time == 'undefined':
-        print('undefined')
         time="1970-01-01T00:00+00:00"
-    else:
-        print('defined!!!' + time)
-    print(post_id)
     max_time = Comment.get_max_time()
 
     comments = Comment.get_changes(post_id, time)
@@ -537,7 +516,6 @@ def get_changes_follower(request, time="1970-01-01T00:00+00:00"):
 def get_comments_changes_for_post(request, post_id, time="1970-01-01T00:00+00:00"):
     if time == 'undefined' or time == '':
         time="1970-01-01T00:00+00:00"
-    print(post_id)
     max_time = Comment.get_max_time_follower(post_id)
     comments = Comment.get_changes(post_id, time)
     context = {"max_time":max_time, "comments":comments}

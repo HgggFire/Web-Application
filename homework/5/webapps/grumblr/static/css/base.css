@@ -1,0 +1,58 @@
+.navbar {
+  background-color: #339966;
+  border-color: #336666;
+}
+
+.navbar .navbar-brand {
+  color: #eee;
+}
+
+.btn-primary, .list-group-item.active, .list-group-item.active:hover, .list-group-item.active::selection {
+    background-color: #339966;
+}
+
+.btn-primary:hover{
+    background-color: #006655;
+}
+
+.btn-success {
+    background-color: #00cc66;
+}
+
+.btn-info {
+    background-color: #00ff99;
+}
+
+
+#post_row {
+    padding: 15px;
+}
+
+#small_profile_picture {
+    height : 50px;
+    width : 50px;
+    margin : 5px;
+}
+
+#comment_profile_picture {
+    height : 40px;
+    width : 40px;
+    margin : 5px;
+}
+
+.comment-block {
+    background-color: #eee;
+}
+
+.comment-list {
+    margin-top : 20px;
+}
+
+.comment-line {
+    margin-top : 15px;
+    margin-right: 60px;
+}
+
+.post_content, .comment_content {
+    margin : 5px;
+}
