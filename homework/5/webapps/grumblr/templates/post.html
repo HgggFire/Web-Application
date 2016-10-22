@@ -1,6 +1,5 @@
 {% load static %}
 <div class='well post-item' id='{{ post_id }}'>
-
     <span><!--profile picture-->
         {% if user.profile.picture.name %}
         <img src={% url 'photo' user.username %} id='small_profile_picture'>
