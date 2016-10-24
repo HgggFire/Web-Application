@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Private Todo List -- Register</title>
+</head>
+
+<body>
+{% for error in errors %}
+<p style="color: red">
+{{ error }}
+</p>
+{% endfor %}
+
+<p>
+Register for a private todo list:
+</p>
+<form method="post" action="/private-todo-list/register">
+<table>
+<tr>
+    <td>Username:</td>
+    <td><input type="text" name="username" value="{{username}}"></td>
+</tr>
+<tr>
+    <td>Password:</td>
+    <td><input type="password" name="password1"></td>
+</tr>
+<tr>
+    <td>Confirm password:</td>
+    <td><input type="password" name="password2"></td>
+</tr>
+</table>
+
+<input type="submit" value="Register" />
+{% csrf_token %}
+</form>
+
+</body>
+</html>
+
