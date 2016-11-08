@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8thhyr61@7-2uo#@4h9pv%tm4*wb0e4eh#np-36jv-v54g-5#u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -135,3 +135,8 @@ MEDIA_URL = '/media/'
 # Configure Django to merely print emails rather than sending them
 # Comment out this line to enable real image-sending
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Allowed Hosts
+ALLOWED_HOSTS = [
+    'ec2-107-21-68-31.compute-1.amazonaws.com',
+]
