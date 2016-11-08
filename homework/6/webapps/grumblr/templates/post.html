@@ -1,0 +1,33 @@
+{% load static %}
+<div class='well post-item' id='{{ post_id }}'>
+    <span><!--profile picture-->
+        {% if user.profile.picture.name %}
+        <img src={% url 'photo' user.username %} id='small_profile_picture'>
+        {% else %}
+        <img src={% static 'images/profile_picture.jpg' %} id='small_profile_picture'>
+        {% endif %}
+    </span>
+    <span><!--user's name, time, and post content-->
+        <span><a href={% url 'profile' user.username %}>{{ user.first_name }} {{ user.last_name }}</a></span>
+        <span class='time'>{{ time }}</span>
+        <div class='post_content'>{{ post }}</div>
+    </span>
+
+
+    <span class='btn btn-default' href='#' role='button'>Like</span>
+    {% if request.user == user %}
+    <form method='post' action={% url 'delete' post.id %} >
+        <span> <input type='submit' class='btn btn-danger delete-btn' value='Delete'></span>
+    </form>
+    {% endif %}
+
+    <div class='row row-offcanvas comment-line'>
+        <div class='col-xs-11 col-sm-11 blog-main'>
+            <input id='comment-field{{ post_id }}' type='text' class='form-control' placeholder='Leave a comment...' name='comment' maxlength='420'>
+        </div>
+        <div class='col-xs-1 col-sm-1 blog-main'>
+            <button name='comment-button{{ post_id }}' class='btn btn-primary comment-button' onclick='addComment({{ post_id }})'>Comment</button>
+        </div>
+    </div>
+    <div id='comment-list{{ post_id }}' class='comment-list'></div>
+</div>
