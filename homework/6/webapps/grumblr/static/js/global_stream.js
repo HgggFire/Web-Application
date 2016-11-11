@@ -80,7 +80,6 @@ $(document).ready(function () {
   // Set up to-do list with initial DB items and DOM data
   populateList();
   $("#post-field").focus();
-//  $(".comment-button").click(addComment);
 
   // Periodically refresh to-do list every 5 seconds
   window.setInterval(getUpdates, 5000);

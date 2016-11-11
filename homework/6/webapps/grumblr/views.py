@@ -510,16 +510,6 @@ def get_changes_follower(request, time="1970-01-01T00:00+00:00"):
     context = {"max_time":max_time, "posts":posts}
     return render(request, 'posts.json', context, content_type='application/json')
 
-# Returns all recent changes to the database, as JSON
-@login_required
-@transaction.atomic
-def get_comments_changes_for_post(request, post_id, time="1970-01-01T00:00+00:00"):
-    if time == 'undefined' or time == '':
-        time="1970-01-01T00:00+00:00"
-    max_time = Comment.get_max_time_follower(post_id)
-    comments = Comment.get_changes(post_id, time)
-    context = {"max_time":max_time, "comments":comments}
-    return render(request, 'comments.json', context, content_type='application/json')
 
 # Returns all recent changes to the database, as JSON
 @login_required

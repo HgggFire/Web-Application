@@ -10,8 +10,6 @@ function populateList() {
               post = data.posts[i];
               var new_post = $(post.html);
               new_post.data("post-id", post.id);
-              var comment_list = $("#comment-list" + post.id);
-              comment_list.data('max-time', data['max-time']);
               list.prepend(new_post);
           }
       });
@@ -37,8 +35,6 @@ function getUpdates() {
               var post = data.posts[i];
               var new_post = $(post.html);
               new_post.data("post-id", post.id);
-              var comment_list = $("#comment-list" + post.id);
-              comment_list.data('max-time', data['max-time']);
               list.prepend(new_post);
           }
 

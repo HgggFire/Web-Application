@@ -82,12 +82,6 @@ class Comment(models.Model):
     def get_max_time():
         return Comment.objects.all().aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
 
-    @staticmethod
-    def get_max_time_follower(post_id):
-        post = Post.objects.get(id=post_id)
-        comments = Comment.objects.filter(post=post).distinct()
-        return comments.aggregate(Max('last_changed'))['last_changed__max'] or "1970-01-01T00:00+00:00"
-
 class Profile(models.Model):
     age = models.PositiveSmallIntegerField()
     bio = models.CharField(max_length=420, default="Write your short bio here.", blank=True)
