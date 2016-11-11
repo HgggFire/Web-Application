@@ -531,3 +531,4 @@ def get_changes_profile(request, username, time="1970-01-01T00:00+00:00"):
     context = {"max_time":max_time, "posts":posts}
     return render(request, 'posts.json', context, content_type='application/json')
 
+

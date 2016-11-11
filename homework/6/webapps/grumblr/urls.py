@@ -49,9 +49,9 @@ urlpatterns = [
     url(r'^get-changes/?$', grumblr.views.get_changes),
     url(r'^add-comment/(?P<post_id>\d+)$', grumblr.views.add_comment),
     url(r'^get-comments-changes/(?P<time>.+)/(?P<post_id>\d+)$', grumblr.views.get_comments_changes),
+    url(r'^get-comments-changes//(?P<post_id>\d+)$', grumblr.views.get_comments_changes),
     url(r'^get-changes-follower/(?P<time>.+)$', grumblr.views.get_changes_follower),
     url(r'^get-changes-follower/?$', grumblr.views.get_changes_follower),
-    url(r'^get-comments-changes-for-post/(?P<time>.*)/(?P<post_id>\d+)$', grumblr.views.get_comments_changes_for_post),
     url(r'^get-changes-profile/(?P<username>.+)/(?P<time>.+)$', grumblr.views.get_changes_profile),
     url(r'^get-changes-profile/(?P<username>.+)/?$', grumblr.views.get_changes_profile),
 ]

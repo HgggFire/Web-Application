@@ -10,6 +10,8 @@ function populateList() {
               post = data.posts[i];
               var new_post = $(post.html);
               new_post.data("post-id", post.id);
+              var comment_list = $("#comment-list" + post.id);
+              comment_list.data('max-time', data['max-time']);
               list.prepend(new_post);
           }
       });
@@ -35,6 +37,8 @@ function getUpdates() {
               var post = data.posts[i];
               var new_post = $(post.html);
               new_post.data("post-id", post.id);
+              var comment_list = $("#comment-list" + post.id);
+              comment_list.data('max-time', data['max-time']);
               list.prepend(new_post);
           }
 
@@ -50,7 +54,7 @@ function getUpdates() {
 function updateComments(id) {
     var list = $("#comment-list" + id);
     var max_time = list.data("max-time")
-    $.get("/grumblr/get-comments-changes-for-post/" + max_time + "/" + id)
+    $.get("/grumblr/get-comments-changes/" + max_time + "/" + id)
       .done(function(data) {
           list.data('max-time', data['max-time']);
           for (var i = 0; i < data.comments.length; i++) {

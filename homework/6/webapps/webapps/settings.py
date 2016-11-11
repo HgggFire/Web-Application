@@ -25,8 +25,9 @@ SECRET_KEY = '8thhyr61@7-2uo#@4h9pv%tm4*wb0e4eh#np-36jv-v54g-5#u'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'ec2-54-159-74-108.compute-1.amazonaws.com',
+]
 
 # Application definition
 
@@ -84,9 +85,19 @@ WSGI_APPLICATION = 'webapps.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hwk6',
+	# The following settings are not used with sqlite3:
+        'USER': 'chico',
+        'PASSWORD': '123',
+        'HOST': 'localhost',    # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',     	
     }
+
+#   'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
 }
 
 
@@ -134,9 +145,10 @@ MEDIA_URL = '/media/'
 
 # Configure Django to merely print emails rather than sending them
 # Comment out this line to enable real image-sending
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# Allowed Hosts
-ALLOWED_HOSTS = [
-    'ec2-107-21-68-31.compute-1.amazonaws.com',
-]
+EMAIL_HOST = 'smtp.andrew.cmu.edu'
+EMAIL_HOST_USER = 'my_andrew_id'
+EMAIL_HOST_PASSWORD = 'my_andrew_password'
+EMAIL_USE_TLS = True
+

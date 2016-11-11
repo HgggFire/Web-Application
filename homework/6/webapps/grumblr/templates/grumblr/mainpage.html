@@ -42,17 +42,15 @@
 			{{ error }}
 			</p>
 			{% endfor %}
-			<form id="post-form" method="post">
+			<div id="post-form"> 
 				<div class="row row-offcanvas" id="post_row">
 					<div class="col-xs-10 col-sm-10 blog-main">
 						<input id='post-field' type="text" class="form-control" placeholder="Say something..." name="post" maxlength="42" required>
 					</div>
-					<div class="col-xs-1 col-sm-1 blog-main">
-						<button id='post-button' class="btn btn-primary">Post</button>
-					</div>
+					<div id='post-button' class="col-xs-2 col-sm-2 blog-main btn btn-primary">Post</div>
+				
 				</div>
-				{% csrf_token %}
-			</form>
+			</div>
 
 			<!--all the posts are listed here-->
 			<div id='post-list'></div>

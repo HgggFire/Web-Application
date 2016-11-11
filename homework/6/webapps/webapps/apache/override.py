@@ -1,4 +1,4 @@
 from webapps.settings import *
 
 DEBUG = True
-ALLOWED_HOSTS = ['ec2-107-21-68-31.compute-1.amazonaws.com']
+ALLOWED_HOSTS = ['ec2-54-159-74-108.compute-1.amazonaws.com']

@@ -20,7 +20,7 @@ class Post(models.Model):
     # Returns all recent additions and deletions to the to-do list.
     @staticmethod
     def get_changes(changetime="1970-01-01T00:00+00:00"):
-        return Post.objects.filter(last_changed__gt=changetime).distinct()
+        return Post.objects.filter(last_changed__gt=changetime).distinct().order_by("time")
 
     @staticmethod
     def get_changes_follower(req_user, changetime="1970-01-01T00:00+00:00"):

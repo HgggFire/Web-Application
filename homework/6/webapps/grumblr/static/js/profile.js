@@ -52,7 +52,7 @@ function getUpdates() {
 function updateComments(id) {
     var list = $("#comment-list" + id);
     var max_time = list.data("max-time")
-    $.get("/grumblr/get-comments-changes-for-post/" + max_time + "/" + id)
+    $.get("/grumblr/get-comments-changes/" + max_time + "/" + id)
       .done(function(data) {
           list.data('max-time', data['max-time']);
           for (var i = 0; i < data.comments.length; i++) {
