@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager
+import hashlib, random
 
 class UserManager(BaseUserManager):
     def create_user(self, username, password):
@@ -13,12 +14,22 @@ class User(models.Model):
     username = models.CharField(max_length=30, unique=True)
     password = models.CharField(max_length=128)
     last_login = models.DateField(auto_now_add=True)
+    salt = models.CharField(max_length=42,default='mysalt')
 
     def set_password(self, password):
-        self.password = password # TODO: Very insecure! Stores password in clear-text.
+        salt = str(random.randrange(9999999))
+        self.salt = salt;
+        hash_obj = hashlib.sha256()
+        hash_obj.update(password + salt)
+        self.password = hash_obj.hexdigest()
+        # TODO: Very insecure! Stores password in clear-text.
 
     def check_password(self, password):
-        return password == self.password # Check user-typed password vs. stored password.
+        salt = self.salt;
+        hash_obj = hashlib.sha256()
+        hash_obj.update(password + salt)
+        hashed_password = hash_obj.hexdigest()
+        return hashed_password == self.password # Check user-typed password vs. stored password.
 
     def __unicode__(self):
         return self.username
