@@ -80,9 +80,9 @@
 		</form><!-- form -->
 
         <form method="post" class="col-sm-6 form-signin" action="{% url 'change_password' %}">
-            <input id="inputPassword" type="password" class="form-control" placeholder="New Password" name="password" required >
+			<input id="inputPassword" type="password" class="form-control" placeholder="New Password" name="password" required >
             <input id="confirmPassword" type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required >
-             <div class="col-xs-12 col-lg-12">
+			<div class="col-xs-12 col-lg-12">
                 <input class="btn btn-lg btn-success btn-block" type="submit" value="Change Password">
             </div>
 			{% csrf_token %}

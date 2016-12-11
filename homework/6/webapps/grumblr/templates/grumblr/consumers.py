@@ -7,10 +7,8 @@ from channels.sessions import channel_session
 def ws_connect(message):
     # Work out room name from path (ignore slashes)
     room = message.content['path'].strip("/")
-    print(room)
     # Save room in session and add us to the group
     message.channel_session['room'] = room
-    print(room)
     Group("chat-%s" % room).add(message.reply_channel)
 
 # Connected to websocket.receive
