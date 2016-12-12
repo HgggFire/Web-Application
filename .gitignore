@@ -10,6 +10,7 @@
 *.pyc
 local_settings.py
 *.py[cod]
+settings.py     # this contains Django secret key
 
 # C extensions
 *.so
